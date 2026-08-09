@@ -54,7 +54,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR (FAQ Link Added) -->
+    <!-- NAVBAR -->
     <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 flex justify-center">
         <nav class="glass-nav w-full max-w-6xl rounded-full px-6 py-3 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2 group">
@@ -521,7 +521,7 @@
         </div>
     </section>
 
-    <!-- FAQ SECTION (Added here with all Q&As) -->
+    <!-- FAQ SECTION (Restored with ALL 17 questions) -->
     <section class="py-20 px-4 bg-[#0d1311]" id="faq">
         <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12">
             
@@ -542,7 +542,7 @@
                 </a>
             </div>
 
-            <!-- Right Column: Accordion -->
+            <!-- Right Column: Accordion (17 Questions Fully Restored) -->
             <div class="flex flex-col gap-4" data-aos="fade-left">
                 
                 <!-- Q1 -->
@@ -578,11 +578,38 @@
                     </div>
                 </div>
 
-
+                <!-- Q4 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Will my website work on phones and tablets?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Absolutely. Every website we build is fully responsive, meaning it works beautifully on desktops, tablets, and smartphones.
+                    </div>
+                </div>
 
                 <!-- Q5 -->
-             
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Can I update my website myself?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Yes. Depending on your project, we can build your website so it's easy to update text, images, blog posts, and other content without needing technical knowledge.
+                    </div>
+                </div>
 
+                <!-- Q6 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Do you provide hosting and domain setup?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Yes. We can help you purchase a domain name, set up reliable hosting, connect your website, and make sure everything is configured correctly.
+                    </div>
+                </div>
 
                 <!-- Q7 -->
                 <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
@@ -595,7 +622,16 @@
                     </div>
                 </div>
 
-                
+                <!-- Q8 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Can you build an online store?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Yes. We can create e-commerce websites that allow customers to browse products, make secure payments, and manage orders efficiently.
+                    </div>
+                </div>
 
                 <!-- Q9 -->
                 <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
@@ -608,7 +644,28 @@
                     </div>
                 </div>
 
-             
+                <!-- Q10 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">What information do you need before starting?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Usually we'll ask for: Your business name, what your business does, your goals, branding (if available), images and content, and any websites you like for inspiration. If you don't have everything ready, don't worry—we'll guide you through the process.
+                    </div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">What happens after my website is launched?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        After launch, we'll test everything one final time and make sure your website is running smoothly. If you choose a maintenance plan, we'll continue to keep it updated and assist whenever needed.
+                    </div>
+                </div>
+
                 <!-- Q12 -->
                 <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
                     <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
@@ -620,7 +677,16 @@
                     </div>
                 </div>
 
-        
+                <!-- Q13 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Do you use templates?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        No. Every website is designed around your business and goals. We don't simply install a generic template—we create a website tailored to your brand.
+                    </div>
+                </div>
 
                 <!-- Premium Q14 -->
                 <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
@@ -644,15 +710,34 @@
                     </div>
                 </div>
 
- 
+                <!-- Premium Q16 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">What if I'm not sure what I need?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        That's completely okay. We'll discuss your business, goals, and budget during a free consultation and recommend the best solution for you.
+                    </div>
+                </div>
 
-             
+                <!-- Premium Q17 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Can you improve my website's speed?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Yes. We optimize every website for fast loading, improved user experience, and better search engine performance.
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
 
-    <!-- MAIN CTA (KEPT FROM YOUR DESIGN) -->
+    <!-- MAIN CTA -->
     <section class="py-20 px-4 bg-[#0d1311]" id="contact">
         <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
             <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Ready to Bring Your Business Online?</h2>
@@ -684,7 +769,7 @@
         </div>
     </footer>
 
-    <!-- WHATSAPP FLOATING BUTTON (Fixed with Mobile Safe-Area Support) -->
+    <!-- WHATSAPP FLOATING BUTTON (Perfectly aligned on mobile & desktop) -->
     <a href="https://wa.me/2347086509637?text=Hi%20SMARK%20Studio!" 
        class="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-6 z-50 group animate-pulse" 
        target="_blank" 
