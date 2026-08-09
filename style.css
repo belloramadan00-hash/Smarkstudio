@@ -2,6 +2,8 @@ body {
     background-color: #0a0f0d;
     color: #e2e8f0;
     font-family: 'Inter', sans-serif;
+    min-height: 100vh; /* Fixes mobile viewport sizing issues */
+    overflow-x: hidden; /* Prevents horizontal scroll jumps */
 }
 
 .glass-nav {
