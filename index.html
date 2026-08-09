@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMARK Studio - Modern Web Design</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+        <!-- Custom SVG Favicon matching the brand logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d27e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23grad)'/%3E%3Ctext x='32' y='44' font-family='Arial, sans-serif' font-weight='bold' font-size='34' fill='%23000000' text-anchor='middle'%3ES'%3C/text%3E%3C/svg%3E">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0a0f0d',
+                            card: '#131917',
+                            accent: '#00d27e',
+                            accent2: '#4ade80',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* FAQ Accordion Specific CSS */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+        .faq-answer.open {
+            max-height: 500px; /* Adjust based on content length */
+            opacity: 1;
+        }
+        .faq-toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-toggle-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR (FAQ Link Added) -->
+    <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 flex justify-center">
+        <nav class="glass-nav w-full max-w-6xl rounded-full px-6 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00d27e] to-[#4ade80] flex items-center justify-center text-black font-bold text-xs">S'</div>
+                <span class="text-white font-bold text-lg tracking-tight">SMARK <span class="text-gray-400 font-normal">Studio</span></span>
+            </a>
+            <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-gray-300">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <a href="consultation.html" class="bg-white text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-gray-200 transition-colors flex items-center gap-1">
+                Book a Free Consultation
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="pt-32 pb-20 px-4 relative overflow-hidden min-h-screen flex items-center">
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="relative z-10" data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-8">
+                    <span class="w-2 h-2 rounded-full bg-[#00d27e] animate-pulse"></span>
+                    🎉 Free consultation for every new project this month.
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-6">
+                    Modern Websites <br>
+                    Built to <span class="text-[#00d27e] relative after:content-[''] after:absolute after:left-0 after:bottom-1 after:w-full after:h-3 after:bg-[#00d27e]/30 after:-z-10">Grow</span> Your <br>
+                    Business.
+                </h1>
+                
+                <p class="text-lg text-gray-400 max-w-lg mb-8 leading-relaxed">
+                    We design and build modern, responsive websites that help businesses establish a professional online presence. Every project is custom-built for speed, performance, and long-term growth.
+                </p>
+
+                <div class="flex flex-wrap gap-4 mb-12">
+                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-4 rounded-full hover:bg-[#4ade80] transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.3)] hover:shadow-[0_0_30px_rgba(0,210,126,0.5)]">
+                        Start Your Project
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+                    <a href="#portfolio" class="bg-[#131917] border border-[#2d3732] text-white font-bold px-8 py-4 rounded-full hover:bg-[#1a1f1c] transition-all flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                            <path d="M5.25 5.25a.75.75 0 00-1.5 0v13.5a.75.75 0 001.5 0V5.25zm13.5 0a.75.75 0 00-1.5 0v13.5a.75.75 0 001.5 0V5.25zM11.25 4.5a.75.75 0 00-1.5 0v15a.75.75 0 001.5 0V4.5z" />
+                        </svg>
+                        View Our Work
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex -space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-teal-400 border-2 border-[#0a0f0d]"></div>
+                        <div class="w-10 h-10 rounded-full bg-blue-500 border-2 border-[#0a0f0d]"></div>
+                        <div class="w-10 h-10 rounded-full bg-orange-500 border-2 border-[#0a0f0d]"></div>
+                        <div class="w-10 h-10 rounded-full bg-pink-500 border-2 border-[#0a0f0d]"></div>
+                    </div>
+                    <div>
+                        <div class="flex text-[#00d27e] text-sm">★★★★★</div>
+                        <p class="text-xs text-gray-500">Trusted by startups, local businesses & creators.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content: Browser Mockup & Floating Badge -->
+            <div class="relative z-10 w-full flex justify-center lg:justify-end" data-aos="fade-left" data-aos-duration="1000">
+                <div class="relative w-full max-w-[450px]">
+                    <div class="floating-badge absolute -top-10 -left-6 bg-[#131917]/90 backdrop-blur-md border border-[#2d3732] p-3 rounded-2xl flex items-center gap-3 z-20 shadow-2xl w-48">
+                        <div class="w-10 h-10 rounded-xl bg-[#00d27e]/20 flex items-center justify-center text-[#00d27e]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.306a11.95 11.95 0 015.814-5.518l2.74-1.22m0 0l-5.94-2.281m5.94 2.28l-2.28 5.941" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400">Conversion</div>
+                            <div class="text-[#00d27e] font-bold text-lg">+147%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="browser-mockup p-4 overflow-hidden relative">
+                        <div class="flex items-center gap-2 mb-4 pb-4 border-b border-white/5">
+                            <div class="flex gap-1.5">
+                                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                            </div>
+                            <div class="flex-1 text-center">
+                                <div class="bg-[#1a1f1c] rounded-full text-[10px] text-gray-500 py-1 px-4">smarkstudio.vercel.app</div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-[#00d27e] to-[#4ade80] flex items-center justify-center text-black font-bold text-xs">S'</div>
+                                <div class="text-white font-bold text-lg">SMARK Studio</div>
+                            </div>
+                            <div class="space-y-2 mt-6 pt-4 border-t border-white/5">
+                                <div class="flex items-center gap-3 text-gray-300 text-sm font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-[#00d27e]">
+                                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                                    </svg>
+                                    Responsive Design
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 text-sm font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-[#00d27e]">
+                                        <path fill-rule="evenodd" d="M12.516 2.25a.75.75 0 00-1.027-.733l-9 3.75a.75.75 0 00-.448.674v10.82a.75.75 0 00.448.673l9 3.75a.75.75 0 00.93-.584l2.314-10.386-2.192 2.192.003.001.003.002.004.002h.001v.001a.75.75 0 001.046.773l4.5-2.25a.75.75 0 000-1.341l-4.5-2.25a.75.75 0 00-1.046.773l-.002.002v.001h-.001l2.192-2.192zM12 3.47l-.673.28v10.82l.673-.28V3.47zm-2.25 8.91L4.5 14.86v-8.36l4.5-1.88v8.36l1.25.52z" clip-rule="evenodd" />
+                                    </svg>
+                                    Fast Performance
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 text-sm font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-[#00d27e]">
+                                        <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v11.16l3.22 3.22a.75.75 0 01-1.06 1.06l-3.75-3.75a.75.75 0 01-.22-.53V3a.75.75 0 01.75-.75zM8.25 16.5h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5zM9 20.25h6a.75.75 0 010 1.5H9a.75.75 0 010-1.5z" clip-rule="evenodd" />
+                                    </svg>
+                                    SEO Ready
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 text-sm font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-[#00d27e]">
+                                        <path fill-rule="evenodd" d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.454l.046-.045a3 3 0 014.243 4.243l-4.783 4.782a4.5 4.5 0 01-6.364 0L4.743 14.54a4.5 4.5 0 010-6.364l.101-.101V5.25zm1.5 0a1.5 1.5 0 013-1.5h3a1.5 1.5 0 011.5 1.5v.806a7.5 7.5 0 01-3.915 1.412l-.786.785L7.5 5.25zm1.5 3.75a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clip-rule="evenodd" />
+                                    </svg>
+                                    Mobile Friendly
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 text-sm font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-[#00d27e]">
+                                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v2.25h2.25a.75.75 0 010 1.5h-2.25v2.25a.75.75 0 01-1.5 0v-2.25H9a.75.75 0 010-1.5h2.25V9a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                                    </svg>
+                                    Modern UI
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-gray-600">
+            <span class="scroll-indicator text-[10px] tracking-widest uppercase font-semibold">Scroll</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-[#00d27e] to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- TRUSTED BY SECTION -->
+    <section class="py-16 border-y border-[#1a1f1c] bg-[#0d1311]">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="text-gray-500 text-xs uppercase tracking-widest font-semibold mb-8" data-aos="fade-up">Building websites for startups, local businesses & creators.</div>
+            <div class="flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="100">
+                <span class="tag-pill">Startup</span>
+                <span class="tag-pill">Business</span>
+                <span class="tag-pill">Portfolio</span>
+                <span class="tag-pill">Restaurant</span>
+                <span class="tag-pill">Education</span>
+                <span class="tag-pill">E-commerce</span>
+                <span class="tag-pill">Agency</span>
+                <span class="tag-pill">Personal Brand</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="py-20 px-4" id="stats">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x-0 md:divide-x divide-[#1a1f1c]">
+                <div class="text-center px-4" data-aos="fade-up" data-aos-delay="0">
+                    <h3 class="stat-number" data-target="150" data-suffix="+">0</h3>
+                    <p class="text-sm text-gray-400 mt-1">Hours of Development</p>
+                </div>
+                <div class="text-center px-4" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="stat-number" data-target="2" data-suffix="">0</h3>
+                    <p class="text-sm text-gray-400 mt-1">Active Projects</p>
+                </div>
+                <div class="text-center px-4" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="stat-number" data-target="100" data-suffix="%">0</h3>
+                    <p class="text-sm text-gray-400 mt-1">Hand-Coded</p>
+                </div>
+                <div class="text-center px-4" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="stat-number" data-target="2026" data-suffix="">0</h3>
+                    <p class="text-sm text-gray-400 mt-1">Founded</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES (EXPANDED) -->
+    <section class="py-20 px-4 bg-[#0d1311]" id="services">
+        <div class="max-w-6xl mx-auto text-center" data-aos="fade-up">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Services We Provide</h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-12">We offer comprehensive web solutions to establish a powerful online presence.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-2xl hover:border-[#2d3732] transition-all cursor-default" data-aos="fade-up" data-aos-delay="50">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 text-[#00d27e] flex items-center justify-center text-2xl mb-4 mx-auto">🖥️</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Web Development</h3>
+                    <p class="text-gray-400 text-sm">Custom, high-performance websites built to scale.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-2xl hover:border-[#2d3732] transition-all cursor-default" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 text-[#00d27e] flex items-center justify-center text-2xl mb-4 mx-auto">📈</div>
+                    <h3 class="text-xl font-bold text-white mb-2">SEO & Performance</h3>
+                    <p class="text-gray-400 text-sm">Search engine optimized and ultra-fast load times.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-2xl hover:border-[#2d3732] transition-all cursor-default" data-aos="fade-up" data-aos-delay="150">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 text-[#00d27e] flex items-center justify-center text-2xl mb-4 mx-auto">🎨</div>
+                    <h3 class="text-xl font-bold text-white mb-2">UI/UX Design</h3>
+                    <p class="text-gray-400 text-sm">Modern, intuitive interfaces crafted for conversions.</p>
+                </div>
+                <!-- NEW SERVICES -->
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-2xl hover:border-[#2d3732] transition-all cursor-default" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 text-[#00d27e] flex items-center justify-center text-2xl mb-4 mx-auto">🔒</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Website Maintenance</h3>
+                    <p class="text-gray-400 text-sm">Keep your website secure, updated, and running smoothly after launch.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-2xl hover:border-[#2d3732] transition-all cursor-default" data-aos="fade-up" data-aos-delay="250">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 text-[#00d27e] flex items-center justify-center text-2xl mb-4 mx-auto">🚀</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Website Redesign</h3>
+                    <p class="text-gray-400 text-sm">Transform outdated websites into modern, high-converting experiences.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-2xl hover:border-[#2d3732] transition-all cursor-default" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 text-[#00d27e] flex items-center justify-center text-2xl mb-4 mx-auto">🛒</div>
+                    <h3 class="text-xl font-bold text-white mb-2">E-commerce</h3>
+                    <p class="text-gray-400 text-sm">Online stores with secure payments, inventory management, and seamless checkout.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION (With Images & Live Links) -->
+    <section class="py-20 px-4" id="portfolio">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 text-center" data-aos="fade-up">Featured Projects</h2>
+            <p class="text-gray-400 text-center mb-12" data-aos="fade-up" data-aos-delay="50">Real work, real code, built from scratch.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- TechReview -->
+                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop" alt="TechReview Mockup" class="w-full h-40 object-cover rounded-xl mb-4">
+                    <h3 class="text-xl font-bold text-white">TechReview</h3>
+                    <p class="text-gray-400 text-sm mt-1 mb-4">Independent product review platform built to help buyers make informed decisions.</p>
+                    <a href="https://techreview-fawn.vercel.app/index.html" target="_blank" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">
+                        View Live Site <span>→</span>
+                    </a>
+                </div>
+
+                <!-- SMARK Studio -->
+                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all" data-aos="fade-left">
+                    <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=2069&auto=format&fit=crop" alt="SMARK Studio Mockup" class="w-full h-40 object-cover rounded-xl mb-4">
+                    <h3 class="text-xl font-bold text-white">SMARK Studio</h3>
+                    <p class="text-gray-400 text-sm mt-1 mb-4">Corporate agency website showcasing modern web design and creativity.</p>
+                    <a href="#" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline pointer-events-none opacity-50">
+                        Currently Viewing
+                    </a>
+                </div>
+
+                <!-- Portfolio -->
+                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=2070&auto=format&fit=crop" alt="Portfolio Website Mockup" class="w-full h-40 object-cover rounded-xl mb-4">
+                    <h3 class="text-xl font-bold text-white">Portfolio Website</h3>
+                    <p class="text-gray-400 text-sm mt-1 mb-4">Personal developer portfolio highlighting design and development skills.</p>
+                    <a href="https://bello-portfolio-md9h.vercel.app/" target="_blank" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">
+                        View Live Site <span>→</span>
+                    </a>
+                </div>
+
+                <!-- Coming Soon -->
+                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all relative overflow-hidden" data-aos="fade-left">
+                    <div class="absolute inset-0 bg-[#00d27e]/5 backdrop-blur-sm flex items-center justify-center z-10">
+                        <span class="text-[#00d27e] font-bold tracking-widest uppercase text-lg">Coming Soon</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?q=80&w=2070&auto=format&fit=crop" alt="Coming Soon Mockup" class="w-full h-40 object-cover rounded-xl mb-4 blur-sm opacity-50">
+                    <h3 class="text-xl font-bold text-white blur-sm">Your Project</h3>
+                    <p class="text-gray-400 text-sm mt-1 blur-sm">Your next client project could be here.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY WE'RE DIFFERENT (UPDATED) -->
+    <section class="py-20 px-4 bg-[#0d1311]" id="about">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-12" data-aos="fade-up">Why We're Different</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="0">
+                    <div class="text-4xl mb-2">💻</div>
+                    <h4 class="font-bold text-white">Hand-Coded Websites</h4>
+                    <p class="text-gray-400 text-xs mt-1">No page builders. Every website is built for performance and flexibility.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-4xl mb-2">🎯</div>
+                    <h4 class="font-bold text-white">Strategy First</h4>
+                    <p class="text-gray-400 text-xs mt-1">We don't just build websites. We understand your goals before writing a single line of code.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-4xl mb-2">⚡</div>
+                    <h4 class="font-bold text-white">Speed Matters</h4>
+                    <p class="text-gray-400 text-xs mt-1">Every page is optimized for speed, SEO, and user experience.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-4xl mb-2">🤝</div>
+                    <h4 class="font-bold text-white">Direct Communication</h4>
+                    <p class="text-gray-400 text-xs mt-1">You'll work directly with the people building your website. No middlemen.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-4xl mb-2">📱</div>
+                    <h4 class="font-bold text-white">Mobile-First</h4>
+                    <p class="text-gray-400 text-xs mt-1">Designed to look amazing on every screen size.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-4xl mb-2">🔍</div>
+                    <h4 class="font-bold text-white">Attention to Detail</h4>
+                    <p class="text-gray-400 text-xs mt-1">From typography to animations, every interaction is carefully refined.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="600">
+                    <div class="text-4xl mb-2">📈</div>
+                    <h4 class="font-bold text-white">Built to Grow</h4>
+                    <p class="text-gray-400 text-xs mt-1">Your website is built so new pages and features can easily be added later.</p>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl hover:border-[#2d3732] transition-all" data-aos="fade-up" data-aos-delay="700">
+                    <div class="text-4xl mb-2">🔒</div>
+                    <h4 class="font-bold text-white">Secure & Reliable</h4>
+                    <p class="text-gray-400 text-xs mt-1">Clean code, secure forms, and modern best practices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT WE'RE BUILDING CAROUSEL (KEPT FROM YOUR REQUEST) -->
+    <section class="py-20 px-4 bg-[#0d1311]" id="projects">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">What We're <span class="text-[#00d27e]">Building</span></h2>
+            <p class="text-gray-400 mb-12" data-aos="fade-up" data-aos-delay="50">Real-world projects by the SMARK Studio team.</p>
+            <div class="project-carousel-container relative" id="projectCarousel">
+                <div class="project-slide active bg-[#131917] border border-[#1a1f1c] p-8 rounded-3xl text-left">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">🚀</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">TechReview</h3>
+                            <div class="w-12 h-1 bg-[#00d27e] rounded-full mt-1"></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">A product review platform currently in active development with <strong class="text-white">150+ products</strong> added.</p>
+                    <div class="flex gap-2">
+                        <span class="text-xs bg-[#00d27e]/20 text-[#00d27e] px-3 py-1 rounded-full border border-[#00d27e]/30">Active Development</span>
+                        <span class="text-xs bg-[#1a1f1c] text-gray-400 px-3 py-1 rounded-full border border-[#2d3732]">In Production</span>
+                    </div>
+                </div>
+                <div class="project-slide inactive bg-[#131917] border border-[#1a1f1c] p-8 rounded-3xl text-left">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">💼</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">SMARK Studio</h3>
+                            <div class="w-12 h-1 bg-[#00d27e] rounded-full mt-1"></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">The website you're viewing was <strong class="text-white">designed and developed</strong> by our team from scratch.</p>
+                    <div class="flex gap-2">
+                        <span class="text-xs bg-[#00d27e]/20 text-[#00d27e] px-3 py-1 rounded-full border border-[#00d27e]/30">Live & Active</span>
+                        <span class="text-xs bg-[#1a1f1c] text-gray-400 px-3 py-1 rounded-full border border-[#2d3732]">Hand-Coded</span>
+                    </div>
+                </div>
+                <div class="project-slide inactive bg-[#131917] border border-[#1a1f1c] p-8 rounded-3xl text-left">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">📱</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Mobile App</h3>
+                            <div class="w-12 h-1 bg-[#00d27e] rounded-full mt-1"></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">Currently expanding into <strong class="text-white">mobile app development</strong> to deliver complete digital solutions for our clients.</p>
+                    <div class="flex gap-2">
+                        <span class="text-xs bg-[#00d27e]/20 text-[#00d27e] px-3 py-1 rounded-full border border-[#00d27e]/30">New Initiative</span>
+                        <span class="text-xs bg-[#1a1f1c] text-gray-400 px-3 py-1 rounded-full border border-[#2d3732]">In Progress</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center gap-6 mt-10">
+                <button onclick="changeSlide(-1)" class="w-10 h-10 rounded-full border border-[#2d3732] hover:bg-[#1a1f1c] flex items-center justify-center text-gray-400 transition-all hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+                </button>
+                <div class="flex items-center gap-2" id="carouselDots">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                </div>
+                <button onclick="changeSlide(1)" class="w-10 h-10 rounded-full border border-[#2d3732] hover:bg-[#1a1f1c] flex items-center justify-center text-gray-400 transition-all hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="py-20 px-4" id="pricing">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold text-white text-center mb-4" data-aos="fade-up">Transparent Pricing</h2>
+            <p class="text-gray-400 text-center mb-12" data-aos="fade-up" data-aos-delay="50">Simple, affordable pricing for every stage of your business.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-3xl hover:border-[#2d3732] transition-all text-left" data-aos="fade-right">
+                    <h3 class="text-xl font-bold text-white mb-2">Starter</h3>
+                    <div class="text-4xl font-bold text-white mb-6">₦25,000</div>
+                    <p class="text-xs text-gray-400 mb-6">Perfect for individuals and small businesses looking to establish their online presence.</p>
+                    <ul class="text-gray-300 text-sm space-y-2 mb-8">
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Up to 5 custom-designed pages</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Fully responsive (mobile, tablet & desktop)</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Modern, professional UI design</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Contact form integration</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Basic on-page SEO setup</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Fast loading performance</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Social media integration</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Free deployment assistance</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> 2 rounds of revisions</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Delivery in 5–7 days</li>
+                    </ul>
+                    <a href="consultation.html" class="block w-full py-3 rounded-full border border-[#2d3732] text-center text-gray-300 hover:border-[#00d27e] hover:text-[#00d27e] transition-all">Get Started</a>
+                </div>
+                <div class="bg-[#1a211d] border-2 border-[#00d27e] p-8 rounded-3xl text-left relative transform md:scale-105 shadow-[0_0_30px_rgba(0,210,126,0.1)]" data-aos="fade-up">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#00d27e] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide">★ Most Popular</span>
+                    <h3 class="text-xl font-bold text-white mb-2">Business</h3>
+                    <div class="text-4xl font-bold text-white mb-6">₦60,000</div>
+                    <p class="text-xs text-gray-400 mb-6">Ideal for growing businesses that need a professional website to attract more customers.</p>
+                    <ul class="text-gray-300 text-sm space-y-2 mb-8">
+                        <li class="flex items-start gap-2 text-[#00d27e] font-bold"><span>✅</span> Everything in Starter</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Up to 12 custom pages</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Premium UI/UX design</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Smooth animations & interactions</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Advanced SEO optimization</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> CMS integration (if needed)</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Google Maps integration</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Blog or News section</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Image optimization</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Performance optimization</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> WhatsApp integration</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Contact forms with email notifications</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> 30 days of free support</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Unlimited revisions during development</li>
+                    </ul>
+                    <a href="consultation.html" class="block w-full py-3 rounded-full bg-[#00d27e] text-black text-center font-bold hover:bg-[#4ade80] transition-all">Get Started</a>
+                </div>
+                <div class="bg-[#131917] border border-[#1a1f1c] p-8 rounded-3xl hover:border-[#2d3732] transition-all text-left" data-aos="fade-left">
+                    <h3 class="text-xl font-bold text-white mb-2">Custom</h3>
+                    <div class="text-4xl font-bold text-white mb-6">Let's Talk</div>
+                    <p class="text-xs text-gray-400 mb-6">For businesses that need something unique or more advanced.</p>
+                    <ul class="text-gray-300 text-sm space-y-2 mb-8">
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> E-commerce websites</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Custom web applications</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Full-stack development</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Booking systems</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Dashboards & Admin Panels</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> School or Business portals</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> API integrations</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Payment gateway integration</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Authentication systems</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Database design</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Ongoing maintenance & support</li>
+                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-1">✅</span> Custom project planning</li>
+                    </ul>
+                    <a href="consultation.html" class="block w-full py-3 rounded-full border border-[#2d3732] text-center text-gray-300 hover:border-[#00d27e] hover:text-[#00d27e] transition-all">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION (Added here with all Q&As) -->
+    <section class="py-20 px-4 bg-[#0d1311]" id="faq">
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <!-- Left Column -->
+            <div class="flex flex-col justify-start" data-aos="fade-right">
+                <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-[#00d27e]"></span>
+                    FAQ
+                </div>
+                <h2 class="text-4xl md:text-6xl font-bold text-white leading-[1.1] mb-6">
+                    Questions?<br><span class="text-[#00d27e]">Answered.</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-sm mb-10 leading-relaxed">
+                    Everything you need to know before we start. Can't find your answer? Reach out — we reply within a few hours.
+                </p>
+                <a href="#contact" class="inline-flex items-center gap-2 text-[#00d27e] font-bold hover:underline">
+                    Ask a question <span>→</span>
+                </a>
+            </div>
+
+            <!-- Right Column: Accordion -->
+            <div class="flex flex-col gap-4" data-aos="fade-left">
+                
+                <!-- Q1 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">How long does it take to build a website?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Every project is different, but most websites are completed within 1–4 weeks, depending on the size and complexity. Before we begin, we'll provide a clear timeline so you always know what to expect.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">How much does a website cost?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Our pricing depends on the type of website you need. Simple websites start from ₦20,000, while larger business websites and custom projects are priced based on their requirements. Contact us for a free quote with no obligation.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Do you redesign existing websites?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Yes! If your current website feels outdated, loads slowly, or no longer reflects your business, we can redesign it with a modern look, better performance, and an improved user experience.
+                    </div>
+                </div>
+
+
+
+                <!-- Q5 -->
+             
+
+
+                <!-- Q7 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Do you offer website maintenance?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Yes. We provide ongoing maintenance, including content updates, bug fixes, security checks, and performance improvements so your website stays in great condition.
+                    </div>
+                </div>
+
+                
+
+                <!-- Q9 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Will my website appear on Google?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Yes. Every website is built with SEO best practices such as clean code, fast loading speeds, proper page structure, and metadata to help search engines understand your site. Ranking well also depends on your content and competition.
+                    </div>
+                </div>
+
+             
+                <!-- Q12 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Why should I choose your agency?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        We focus on creating websites that are fast, modern, responsive, and designed around your business goals. Every project is built with attention to detail, clear communication, and a commitment to quality from start to finish.
+                    </div>
+                </div>
+
+        
+
+                <!-- Premium Q14 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Can I request changes during the project?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        Of course. We encourage collaboration throughout the project, and you'll have opportunities to review the work and request revisions before launch.
+                    </div>
+                </div>
+
+                <!-- Premium Q15 -->
+                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-bold text-white">Do you only work with businesses in Nigeria?</h3>
+                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">
+                        No. We work remotely with clients from anywhere in the world.
+                    </div>
+                </div>
+
+ 
+
+             
+            </div>
+        </div>
+    </section>
+
+
+    <!-- MAIN CTA (KEPT FROM YOUR DESIGN) -->
+    <section class="py-20 px-4 bg-[#0d1311]" id="contact">
+        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Ready to Bring Your Business Online?</h2>
+            <p class="text-gray-400 max-w-lg mx-auto mb-10">Whether you're launching a startup, growing a business, or refreshing your online presence, we're ready to build a website that helps you stand out.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-4 rounded-full hover:bg-[#4ade80] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.3)]">
+                    Book Free Consultation
+                </a>
+                <a href="getquote.html" class="bg-[#131917] border border-[#2d3732] text-white font-bold px-8 py-4 rounded-full hover:bg-[#1a1f1c] transition-all">
+                    Get Quote
+                </a>
+            </div>
+            <div class="mt-10 text-gray-500 text-sm">
+                <span class="block">Email: <a href="mailto:hello@smarkstudio.vercel.app" class="hover:text-[#00d27e] transition-colors">hello@smarkstudio.vercel.app</a></span>
+                <span class="block mt-2">Contact us on WhatsApp</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 px-4 border-t border-[#1a1f1c] text-center text-gray-500 text-sm">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="text-white font-bold">SMARK Studio</span> — Based in Nigeria, Working Worldwide
+            </div>
+            <div>
+                &copy; 2026 SMARK Studio. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOATING BUTTON (Moved to Bottom Right) -->
+    <a href="https://wa.me/2347086509637?text=Hi%20SMARK%20Studio!" 
+       class="fixed bottom-6 right-6 z-50 group animate-pulse" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       title="Chat on WhatsApp">
+      <div class="relative flex items-center justify-center w-14 h-14 bg-[#075e54] rounded-full shadow-lg ring-4 ring-[#075e54]/20 hover:ring-[#075e54]/40 transition-all duration-300 group-hover:scale-105">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="#ffffff"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ once: true, offset: 100, duration: 800 });
+
+        // Counter Animation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = parseInt(el.getAttribute('data-target'));
+                        const suffix = el.getAttribute('data-suffix') || '';
+                        let current = 0;
+                        const increment = target / 60; 
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                el.textContent = Math.floor(current) + suffix;
+                                requestAnimationFrame(updateCounter);
+                            } else { el.textContent = target + suffix; }
+                        };
+                        updateCounter();
+                        obs.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            counters.forEach(counter => observer.observe(counter));
+        });
+
+        // Apple-style Carousel Logic
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.project-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let autoPlayInterval;
+
+        function updateCarousel(newIndex) {
+            clearInterval(autoPlayInterval);
+            slides[currentSlideIndex].classList.remove('active');
+            slides[currentSlideIndex].classList.add('inactive');
+            dots[currentSlideIndex].classList.remove('active');
+            currentSlideIndex = (newIndex + slides.length) % slides.length;
+            slides[currentSlideIndex].classList.remove('inactive');
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+            startAutoPlay();
+        }
+
+        function changeSlide(direction) { updateCarousel(currentSlideIndex + direction); }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = parseInt(dot.dataset.index);
+                if (index !== currentSlideIndex) updateCarousel(index);
+            });
+        });
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => { changeSlide(1); }, 6000);
+        }
+
+        const carouselContainer = document.getElementById('projectCarousel');
+        carouselContainer.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+        startAutoPlay();
+
+        // FAQ Accordion Logic
+        function toggleFaq(element) {
+            const item = element.closest('.faq-item');
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+
+            // Close all previous
+            document.querySelectorAll('.faq-item.active').forEach(activeItem => {
+                if(activeItem !== item) {
+                    activeItem.classList.remove('active');
+                    activeItem.querySelector('.faq-answer').classList.remove('open');
+                }
+            });
+
+            // Toggle current
+            if(!isActive) {
+                item.classList.add('active');
+                answer.classList.add('open');
+            } else {
+                item.classList.remove('active');
+                answer.classList.remove('open');
+            }
+        }
+    </script>
+</body>
+</html>
