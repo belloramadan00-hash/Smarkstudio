@@ -55,11 +55,11 @@
 <body>
 
     <!-- NAVBAR -->
-    <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 flex justify-center">
-        <nav class="glass-nav w-full max-w-6xl rounded-full px-6 py-3 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-2 group">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00d27e] to-[#4ade80] flex items-center justify-center text-black font-bold text-xs">S'</div>
-                <span class="text-white font-bold text-lg tracking-tight">SMARK</span>
+    <header class="fixed top-0 left-0 w-full z-50 px-3 py-3 md:px-4 md:py-4 flex justify-center">
+        <nav class="glass-nav w-full max-w-6xl rounded-full px-3 py-2 md:px-6 md:py-3 flex justify-between items-center gap-2">
+            <a href="#" class="flex items-center gap-2 group shrink-0">
+                <div class="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-gradient-to-tr from-[#00d27e] to-[#4ade80] flex items-center justify-center text-black font-bold text-xs shrink-0">S'</div>
+                <span class="text-white font-bold text-sm md:text-lg tracking-tight whitespace-nowrap">SMARK <span class="text-gray-400 font-normal">Studio</span></span>
             </a>
             <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-gray-300">
                 <a href="#" class="nav-link">Home</a>
@@ -70,9 +70,10 @@
                 <a href="#faq" class="nav-link">FAQ</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <a href="consultation.html" class="bg-white text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-gray-200 transition-colors flex items-center gap-1">
-                Book a Free Consultation
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+            <a href="consultation.html" class="bg-white text-black text-xs md:text-sm font-semibold px-3 py-2 md:px-5 md:py-2.5 rounded-full hover:bg-gray-200 transition-colors flex items-center gap-1 whitespace-nowrap shrink-0">
+                <span class="md:hidden">Book Now</span>
+                <span class="hidden md:inline">Book a Free Consultation</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
             </a>
