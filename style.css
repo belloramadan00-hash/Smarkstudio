@@ -1,9 +1,15 @@
+html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
 body {
     background-color: #0a0f0d;
     color: #e2e8f0;
     font-family: 'Inter', sans-serif;
     min-height: 100dvh; /* Ensures safe dynamic sizing */
     overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
 }
 .glass-nav {
     background: rgba(19, 25, 23, 0.7);
