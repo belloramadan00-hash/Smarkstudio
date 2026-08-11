@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     // 5. Send the email via Resend
     const { data, error } = await resend.emails.send({
       from: 'SMARK Studio <onboarding@resend.dev>', // Keep this for testing
-      to: ['hello@smarkstudio.vercel.app'], // Your receiving email
+  to: ['belloramadan00@gmail.com'], // Your receiving email
       subject: `New Inquiry from ${fullname}`,
       html: emailHtml,
     });
