@@ -357,10 +357,9 @@
                         body: JSON.stringify(formData)
                     });
 
-                    if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error || 'Server returned an error');
-}
+                  if (!response.ok) {
+                         throw new Error('Server returned an error');
+      }
 
                     // Success
                     formContainer.classList.add('hidden');
