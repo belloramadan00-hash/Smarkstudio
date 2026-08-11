@@ -1,52 +1,51 @@
-// send-email.js
+import { Resend } from 'resend';
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("contact-form");
+export default async function handler(req, res) {
+  // 1. Allow only POST requests
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-  if (!form) return;
+  // 2. Initialize Resend with your Environment Variable
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  try {
+    // 3. Grab the data sent from your forms
+    const { fullname, email, company, service, budget, timeline, details, projectType, pages, tier, addons, estimatedPrice } = req.body;
 
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalText = submitButton ? submitButton.textContent : "";
+    // 4. Build the email body
+    const emailHtml = `
+      <h2>New Project Inquiry</h2>
+      <p><strong>Name:</strong> ${fullname}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Company:</strong> ${company || 'N/A'}</p>
+      <p><strong>Service/Type:</strong> ${service || projectType || 'N/A'}</p>
+      <p><strong>Budget:</strong> ${budget}</p>
+      <p><strong>Timeline:</strong> ${timeline}</p>
+      ${pages ? `<p><strong>Pages:</strong> ${pages}</p>` : ''}
+      ${tier ? `<p><strong>Design Tier:</strong> ${tier}</p>` : ''}
+      ${addons ? `<p><strong>Add-ons:</strong> ${addons.join(', ')}</p>` : ''}
+      ${estimatedPrice ? `<p><strong>Estimated Price:</strong> ${estimatedPrice}</p>` : ''}
+      <p><strong>Details:</strong><br>${details || 'None provided'}</p>
+    `;
 
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = "Sending...";
+    // 5. Send the email via Resend
+    const { data, error } = await resend.emails.send({
+      from: 'SMARK Studio <onboarding@resend.dev>', // Keep this for testing
+      to: ['hello@smarkstudio.vercel.app'], // Your receiving email
+      subject: `New Inquiry from ${fullname}`,
+      html: emailHtml,
+    });
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
     }
 
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: document.getElementById("name")?.value || "",
-          email: document.getElementById("email")?.value || "",
-          subject: document.getElementById("subject")?.value || "",
-          message: document.getElementById("message")?.value || "",
-        }),
-      });
+    // 6. Tell the frontend it was successful
+    res.status(200).json({ success: true, data });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to send message.");
-      }
-
-      alert("Your message has been sent successfully!");
-
-      form.reset();
-    } catch (error) {
-      console.error("Email error:", error);
-      alert("Sorry, your message could not be sent. Please try again.");
-    } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = originalText;
-      }
-    }
-  });
-});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
