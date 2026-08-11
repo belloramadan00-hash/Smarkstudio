@@ -413,17 +413,17 @@
                         if (formContainer) formContainer.classList.add('hidden');
                         if (successMsg) successMsg.classList.remove('hidden');
 
-                    } catch (error) {
-                        console.error('Failed to send:', error);
-                        alert('Oops! Something went wrong sending your request. Please try again or reach out on WhatsApp.');
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = originalBtnContent;
-                        submitBtn.classList.remove('opacity-60');
-                    }
-                });
+                               } catch (error) {
+                console.error('Failed to send:', error);
+                // Show the actual error message sent from the server!
+                alert(error.message || 'Oops! Something went wrong sending your request. Please try again or reach out on WhatsApp.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+                submitBtn.classList.remove('opacity-60');
             }
-        });
+                });
+           
     </script>
 </body>
 </html>
