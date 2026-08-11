@@ -358,8 +358,9 @@
                     });
 
                     if (!response.ok) {
-                        throw new Error('Server returned an error');
-                    }
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || 'Server returned an error');
+}
 
                     // Success
                     formContainer.classList.add('hidden');
@@ -368,9 +369,10 @@
                     document.querySelectorAll('.toggle-btn.active').forEach(btn => btn.classList.remove('active'));
                     document.querySelectorAll('input[type="hidden"]').forEach(inp => inp.value = '');
                     
-                } catch (error) {
-                    console.error('Failed to send:', error);
-                    alert('Oops! Something went wrong sending your message. Please try again or contact us directly.');
+        } catch (error) {
+    console.error('Failed to send:', error);
+    alert(`Error: ${error.message}`);
+}
                 } finally {
                     isSubmitting = false;
                     submitBtn.disabled = false;
