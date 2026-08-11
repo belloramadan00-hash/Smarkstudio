@@ -1,45 +1,114 @@
-// api/send-email.js
-import { Resend } from 'resend';
+const { Resend } = require('resend');
 
-export default async function handler(req, res) {
-  // 1. Allow only POST requests
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+module.exports = async (req, res) => {
+  // Only allow POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({
+      success: false,
+      error: 'Method not allowed'
+    });
   }
 
-  // 2. Get your Resend API Key from environment variables (We'll set this in Step 3)
-  const resend = new Resend(process.env.RESEND_API_KEY);
-
   try {
-    const { fullname, email, company, service, budget, timeline, details } = req.body;
+    const data = req.body || {};
 
-    // 3. Send the email
-    const { data, error } = await resend.emails.send({
-      from: 'SMARK Studio <onboarding@resend.dev>', // Keep this for testing. Change later once you buy a domain.
-      to: ['belloramadan00@gmail.com'], // The email where you want to receive the message!
-      subject: `New Project Inquiry from ${fullname}`,
-      html: `
-        <h2>New Lead Form Submission</h2>
-        <p><strong>Name:</strong> ${fullname}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Company:</strong> ${company || 'N/A'}</p>
-        <p><strong>Service Needed:</strong> ${service || 'Not specified'}</p>
-        <p><strong>Budget:</strong> ${budget}</p>
-        <p><strong>Timeline:</strong> ${timeline}</p>
-        <p><strong>Details:</strong><br>${details || 'None provided'}</p>
-      `,
-    });
+    const {
+      fullname,
+      email,
+      company,
+      service,
+      budget,
+      timeline,
+      details,
 
-    if (error) {
-      console.error('Resend error:', error);
-      return res.status(500).json({ error: error.message });
+      // Consultation-specific fields
+      current_site,
+
+      // Get Quote-specific fields
+      projectType,
+      pages,
+      tier,
+      addons,
+      estimatedPrice
+    } = data;
+
+    // Basic validation
+    if (!fullname || !email) {
+      return res.status(400).json({
+        success: false,
+        error: 'Name and email are required.'
+      });
     }
 
-    // 4. Return success to your frontend
-    res.status(200).json({ success: true, data });
+    // Build the email content
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <h2>New SMARK Studio Inquiry</h2>
+
+        <p><strong>Name:</strong> ${fullname}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+
+        ${service ? `<p><strong>Service:</strong> ${service}</p>` : ''}
+        ${budget ? `<p><strong>Budget:</strong> ${budget}</p>` : ''}
+        ${timeline ? `<p><strong>Timeline:</strong> ${timeline}</p>` : ''}
+        ${current_site ? `<p><strong>Current Website:</strong> ${current_site}</p>` : ''}
+
+        ${projectType ? `<p><strong>Project Type:</strong> ${projectType}</p>` : ''}
+        ${pages ? `<p><strong>Pages:</strong> ${pages}</p>` : ''}
+        ${tier ? `<p><strong>Package:</strong> ${tier}</p>` : ''}
+        ${estimatedPrice ? `<p><strong>Estimated Price:</strong> ${estimatedPrice}</p>` : ''}
+
+        ${
+          addons && Array.isArray(addons) && addons.length
+            ? `<p><strong>Add-ons:</strong> ${addons.join(', ')}</p>`
+            : ''
+        }
+
+        <h3>Project Details</h3>
+        <p>${details || 'No additional details provided.'}</p>
+
+        <hr>
+
+        <p style="color:#666;font-size:12px;">
+          Sent from the SMARK Studio website.
+        </p>
+      </div>
+    `;
+
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'SMARK Studio <onboarding@resend.dev>',
+      to: ['belloramadan00@gmail.com'],
+      reply_to: email,
+      subject: `New SMARK Studio Inquiry from ${fullname}`,
+      html: emailHtml
+    });
+
+    // Resend returned an error
+    if (error) {
+      console.error('Resend error:', error);
+
+      return res.status(500).json({
+        success: false,
+        error: error.message || 'Resend failed to send the email.'
+      });
+    }
+
+    console.log('Email sent successfully:', emailData);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Email sent successfully.'
+    });
 
   } catch (error) {
     console.error('Server error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Something went wrong on the server.'
+    });
   }
-}
+};
