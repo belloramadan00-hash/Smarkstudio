@@ -583,7 +583,10 @@
                     body: JSON.stringify(data)
                 });
                 
-                if (!response.ok) throw new Error('Server error');
+              if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || 'Server error');
+}
 
                 // Success!
                 document.querySelector('#step-5').innerHTML = `
@@ -595,11 +598,14 @@
                         <p class="text-gray-400">We've received your details and will reach out within <span class="text-white font-semibold">3 hours</span>.</p>
                     </div>
                 `;
-            } catch (error) {
-                alert('Oops! Something went wrong. Please try again or contact us directly.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `Submit Request →`;
-            }
+          } catch (error) {
+    console.error(error);
+
+    alert(error.message);
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = `Submit Request →`;
+}
         });
     </script>
 </body>
