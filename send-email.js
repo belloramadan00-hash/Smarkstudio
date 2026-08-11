@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     // 3. Send the email
     const { data, error } = await resend.emails.send({
       from: 'SMARK Studio <onboarding@resend.dev>', // Keep this for testing. Change later once you buy a domain.
-      to: ['hello@smarkstudio.vercel.app'], // The email where you want to receive the message!
+      to: ['belloramadan00@gmail.com'], // The email where you want to receive the message!
       subject: `New Project Inquiry from ${fullname}`,
       html: `
         <h2>New Lead Form Submission</h2>
