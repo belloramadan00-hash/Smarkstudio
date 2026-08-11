@@ -9,8 +9,6 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d27e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23grad)'/%3E%3Ctext x='32' y='44' font-family='Arial, sans-serif' font-weight='bold' font-size='34' fill='%23000000' text-anchor='middle'%3ES'%3C/text%3E%3C/svg%3E">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- EmailJS library -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -23,22 +21,73 @@
             }
         }
     </script>
+
+    <style>
+        .toggle-btn {
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #2d3732;
+            background-color: #0a0f0d;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            text-align: center;
+            user-select: none;
+        }
+        .toggle-btn:hover {
+            border-color: #00d27e;
+            color: #ffffff;
+        }
+        .toggle-btn.active {
+            border-color: #00d27e !important;
+            background-color: rgba(0, 210, 126, 0.12) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(0, 210, 126, 0.2);
+            font-weight: 600;
+        }
+        .form-input {
+            width: 100%;
+            background-color: #0a0f0d;
+            border: 1px solid #2d3732;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .form-input:focus {
+            border-color: #00d27e;
+        }
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.35rem;
+        }
+        .has-error .error-message {
+            display: block;
+        }
+        .has-error input, .has-error textarea {
+            border-color: #ef4444 !important;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-[#0a0f0d] text-white">
 
     <!-- NAVBAR -->
     <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 flex justify-center">
-        <nav class="glass-nav w-full max-w-6xl rounded-full px-6 py-3 flex justify-between items-center">
+        <nav class="glass-nav w-full max-w-6xl rounded-full px-6 py-3 flex justify-between items-center border border-[#2d3732] bg-[#131917]/80 backdrop-blur-md">
             <a href="index.html" class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00d27e] to-[#4ade80] flex items-center justify-center text-black font-bold text-xs">S'</div>
                 <span class="text-white font-bold text-lg tracking-tight">SMARK <span class="text-gray-400 font-normal">Studio</span></span>
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="index.html#services" class="nav-link">Services</a>
-                <a href="index.html#portfolio" class="nav-link">Portfolio</a>
-                <a href="index.html#pricing" class="nav-link">Pricing</a>
-                <a href="index.html#faq" class="nav-link">FAQ</a> <!-- Fixed link -->
-                <a href="#" class="nav-link text-[#00d27e]">Contact</a>
+                <a href="index.html#services" class="hover:text-white transition">Services</a>
+                <a href="index.html#portfolio" class="hover:text-white transition">Portfolio</a>
+                <a href="index.html#pricing" class="hover:text-white transition">Pricing</a>
+                <a href="index.html#faq" class="hover:text-white transition">FAQ</a>
+                <a href="#" class="text-[#00d27e]">Contact</a>
             </div>
         </nav>
     </header>
@@ -49,7 +98,7 @@
             
             <!-- Left Content -->
             <div class="flex flex-col justify-start">
-                <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-6">
+                <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-6 w-fit">
                     <span class="w-2 h-2 rounded-full bg-[#00d27e]"></span>
                     3 slots left this month
                 </div>
@@ -94,18 +143,17 @@
                     </div>
                 </div>
 
-                <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-3 rounded-2xl text-sm">
+                <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-3 rounded-2xl text-sm w-fit">
                     <svg class="w-5 h-5 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Average response time: <span class="text-white font-bold">under 3 hours</span>
                 </div>
             </div>
 
-            <!-- Right Content: Form -->
+            <!-- Right Content: Form Container -->
             <div class="bg-[#131917] border border-[#2d3732] rounded-3xl p-6 md:p-8 relative">
                 
                 <div id="form-container">
                     <form id="consultation-form" novalidate>
-                        <input type="hidden" name="contact_number" value="0000">
                         
                         <!-- Row 1 -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -151,8 +199,8 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
                                 What do you need? <span class="text-[#00d27e]">*</span>
                             </label>
+                            <input type="hidden" name="service" id="service-input">
                             <div class="flex flex-wrap gap-2" id="service-container">
-                                <input type="hidden" name="service" id="service-input" required>
                                 <div class="toggle-btn" data-value="Website Design">Website Design</div>
                                 <div class="toggle-btn" data-value="Website Development">Website Development</div>
                                 <div class="toggle-btn" data-value="Landing Page">Landing Page</div>
@@ -172,13 +220,13 @@
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     Budget <span class="text-[#00d27e]">*</span>
                                 </label>
-                                <div class="flex flex-wrap gap-2" id="budget-container">
-                                    <input type="hidden" name="budget" id="budget-input" required>
-                                    <div class="toggle-btn w-full" data-value="< ₦25,000">&lt; ₦25,000</div>
-                                    <div class="toggle-btn w-full" data-value="₦25,000 – ₦65,000">₦25,000 – ₦65,000</div>
-                                    <div class="toggle-btn w-full" data-value="₦65,000 – ₦150,000">₦65,000 – ₦150,000</div>
-                                    <div class="toggle-btn w-full" data-value="₦150,000+">₦150,000+</div>
-                                    <div class="toggle-btn w-full" data-value="Let's discuss">Let's discuss</div>
+                                <input type="hidden" name="budget" id="budget-input">
+                                <div class="flex flex-col gap-2" id="budget-container">
+                                    <div class="toggle-btn" data-value="< ₦25,000">&lt; ₦25,000</div>
+                                    <div class="toggle-btn" data-value="₦25,000 – ₦65,000">₦25,000 – ₦65,000</div>
+                                    <div class="toggle-btn" data-value="₦65,000 – ₦150,000">₦65,000 – ₦150,000</div>
+                                    <div class="toggle-btn" data-value="₦150,000+">₦150,000+</div>
+                                    <div class="toggle-btn" data-value="Let's discuss">Let's discuss</div>
                                 </div>
                                 <div class="error-message">Please select your budget.</div>
                             </div>
@@ -189,13 +237,13 @@
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     Timeline <span class="text-[#00d27e]">*</span>
                                 </label>
-                                <div class="flex flex-wrap gap-2" id="timeline-container">
-                                    <input type="hidden" name="timeline" id="timeline-input" required>
-                                    <div class="toggle-btn w-[45%]" data-value="ASAP">ASAP</div>
-                                    <div class="toggle-btn w-[45%]" data-value="1-2 weeks">1-2 weeks</div>
-                                    <div class="toggle-btn w-[45%]" data-value="1 month">1 month</div>
-                                    <div class="toggle-btn w-[45%]" data-value="2-3 months">2-3 months</div>
-                                    <div class="toggle-btn w-[45%]" data-value="Flexible">Flexible</div>
+                                <input type="hidden" name="timeline" id="timeline-input">
+                                <div class="flex flex-col gap-2" id="timeline-container">
+                                    <div class="toggle-btn" data-value="ASAP">ASAP</div>
+                                    <div class="toggle-btn" data-value="1-2 weeks">1-2 weeks</div>
+                                    <div class="toggle-btn" data-value="1 month">1 month</div>
+                                    <div class="toggle-btn" data-value="2-3 months">2-3 months</div>
+                                    <div class="toggle-btn" data-value="Flexible">Flexible</div>
                                 </div>
                                 <div class="error-message">Please select your timeline.</div>
                             </div>
@@ -221,8 +269,8 @@
                     </form>
                 </div>
 
-                <!-- Success Message -->
-                <div id="success-message" class="text-center py-10">
+                <!-- Success Message (Hidden by default) -->
+                <div id="success-message" class="text-center py-10 hidden">
                     <div class="w-16 h-16 rounded-full bg-[#00d27e]/20 flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
@@ -233,9 +281,9 @@
         </div>
     </section>
 
-    <!-- WHATSAPP FLOATING BUTTON (Fixed to Bottom Right) -->
+    <!-- WHATSAPP FLOATING BUTTON -->
     <a href="https://wa.me/2347086509637?text=Hi%20SMARK%20Studio!" 
-       class="fixed bottom-6 right-6 z-50 group animate-pulse" 
+       class="fixed bottom-6 right-6 z-50 group" 
        target="_blank" 
        rel="noopener noreferrer"
        title="Chat on WhatsApp">
@@ -246,139 +294,135 @@
       </div>
     </a>
 
+    <!-- SCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Function to handle category button selection
+            function setupToggleGroup(containerId, hiddenInputId) {
+                const container = document.getElementById(containerId);
+                const hiddenInput = document.getElementById(hiddenInputId);
+                if (!container || !hiddenInput) return;
+
+                const buttons = container.querySelectorAll('.toggle-btn');
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        buttons.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        hiddenInput.value = btn.getAttribute('data-value') || btn.innerText;
+                        
+                        // Clear error state if previously triggered
+                        container.parentElement.classList.remove('has-error');
+                    });
+                });
+            }
+
+            // Initialize selection handlers
+            setupToggleGroup('service-container', 'service-input');
+            setupToggleGroup('budget-container', 'budget-input');
+            setupToggleGroup('timeline-container', 'timeline-input');
+
+            // Form elements
             const form = document.getElementById('consultation-form');
             const submitBtn = document.getElementById('submit-btn');
             const formContainer = document.getElementById('form-container');
             const successMsg = document.getElementById('success-message');
-            
-            let isSubmitting = false;
 
-            // Initialize EmailJS (Replace with your actual keys)
-            // (function() {
-            //     emailjs.init("YOUR_PUBLIC_KEY");
-            // })();
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
 
-            // 1. Setup Toggle Buttons
-            document.querySelectorAll('#service-container, #budget-container, #timeline-container').forEach(container => {
-                const btns = container.querySelectorAll('.toggle-btn');
-                const hiddenInput = document.getElementById(container.id.replace('-container', '-input'));
+                    let isValid = true;
 
-                btns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // Remove active from siblings
-                        btns.forEach(b => b.classList.remove('active'));
-                        // Activate clicked
-                        btn.classList.add('active');
-                        // Set hidden input value
-                        hiddenInput.value = btn.dataset.value;
-                        
-                        // Remove error styling from this container
-                        container.querySelectorAll('.toggle-btn.error').forEach(el => el.classList.remove('error'));
-                        const errorMsg = container.parentElement.querySelector('.error-message');
-                        if(errorMsg) errorMsg.classList.remove('visible');
-                    });
-                });
-            });
+                    // Reset previous validation errors
+                    form.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
 
-            // 2. Form Validation & Submission
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (isSubmitting) return;
+                    // Validate Name
+                    const fullname = form.fullname.value.trim();
+                    if (!fullname) {
+                        form.fullname.parentElement.classList.add('has-error');
+                        isValid = false;
+                    }
 
-                let isValid = true;
-                const requiredFields = [
-                    { id: 'fullname', type: 'input' },
-                    { id: 'email', type: 'input' },
-                    { id: 'service', type: 'toggle' },
-                    { id: 'budget', type: 'toggle' },
-                    { id: 'timeline', type: 'toggle' }
-                ];
+                    // Validate Email
+                    const email = form.email.value.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!email || !emailRegex.test(email)) {
+                        form.email.parentElement.classList.add('has-error');
+                        isValid = false;
+                    }
 
-                // Validate inputs
-                requiredFields.forEach(field => {
-                    if (field.type === 'input') {
-                        const input = form.querySelector(`[name="${field.id}"]`);
-                        const errorMsg = input.parentElement.querySelector('.error-message');
-                        if (!input.value.trim()) {
-                            input.classList.add('error');
-                            errorMsg.classList.add('visible');
-                            isValid = false;
-                        } else {
-                            input.classList.remove('error');
-                            errorMsg.classList.remove('visible');
+                    // Validate Service
+                    const service = document.getElementById('service-input').value;
+                    if (!service) {
+                        document.getElementById('service-container').parentElement.classList.add('has-error');
+                        isValid = false;
+                    }
+
+                    // Validate Budget
+                    const budget = document.getElementById('budget-input').value;
+                    if (!budget) {
+                        document.getElementById('budget-container').parentElement.classList.add('has-error');
+                        isValid = false;
+                    }
+
+                    // Validate Timeline
+                    const timeline = document.getElementById('timeline-input').value;
+                    if (!timeline) {
+                        document.getElementById('timeline-container').parentElement.classList.add('has-error');
+                        isValid = false;
+                    }
+
+                    // Stop submission if validation fails
+                    if (!isValid) {
+                        const firstError = form.querySelector('.has-error');
+                        if (firstError) {
+                            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
-                    } else if (field.type === 'toggle') {
-                        const hiddenInput = document.getElementById(`${field.id}-input`);
-                        const container = document.getElementById(`${field.id}-container`);
-                        const errorMsg = container.parentElement.querySelector('.error-message');
-                        if (!hiddenInput.value) {
-                            container.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.add('error'));
-                            errorMsg.classList.add('visible');
-                            isValid = false;
-                        } else {
-                            container.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('error'));
-                            errorMsg.classList.remove('visible');
+                        return;
+                    }
+
+                    // Loading State
+                    submitBtn.disabled = true;
+                    const originalBtnContent = submitBtn.innerHTML;
+                    submitBtn.innerHTML = `<span>Sending...</span>`;
+                    submitBtn.classList.add('opacity-60');
+
+                    try {
+                        const formData = {
+                            fullname: fullname,
+                            email: email,
+                            company: form.company.value.trim(),
+                            current_site: form.current_site.value.trim(),
+                            service: service,
+                            budget: budget,
+                            timeline: timeline,
+                            details: form.details.value.trim()
+                        };
+
+                        const response = await fetch('/api/send-email', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(formData)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Server returned an error');
                         }
+
+                        // Success view toggle
+                        if (formContainer) formContainer.classList.add('hidden');
+                        if (successMsg) successMsg.classList.remove('hidden');
+
+                    } catch (error) {
+                        console.error('Failed to send:', error);
+                        alert('Oops! Something went wrong sending your request. Please try again or reach out on WhatsApp.');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnContent;
+                        submitBtn.classList.remove('opacity-60');
                     }
                 });
-
-                if (!isValid) {
-                    // Scroll to the first error
-                    const firstError = form.querySelector('.error, .toggle-btn.error');
-                    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    return;
-                }
-
-                // Start Submission
-                isSubmitting = true;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = `<span class="spinner"></span> Sending...`;
-                submitBtn.classList.add('opacity-60');
-
-                try {
-                    // 1. Prepare the data to send
-                    const formData = {
-                        fullname: form.fullname.value,
-                        email: form.email.value,
-                        company: form.company.value,
-                        current_site: form.current_site.value,
-                        service: form.querySelector('[name="service"]').value,
-                        budget: form.querySelector('[name="budget"]').value,
-                        timeline: form.querySelector('[name="timeline"]').value,
-                        details: form.details.value
-                    };
-
-                    // 2. Send it to your backend (just like getquote.html)
-                    const response = await fetch('/api/send-email', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-
-                  if (!response.ok) {
-                         throw new Error('Server returned an error');
-      }
-
-                    // Success
-                    formContainer.classList.add('hidden');
-                    successMsg.classList.add('visible');
-                    form.reset();
-                    document.querySelectorAll('.toggle-btn.active').forEach(btn => btn.classList.remove('active'));
-                    document.querySelectorAll('input[type="hidden"]').forEach(inp => inp.value = '');
-                    
-} catch (error) {
-    console.error('Failed to send:', error);
-    alert('Oops! Something went wrong sending your message. Please try again or contact us directly.');
-}
-                } finally {
-                    isSubmitting = false;
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = `Book My Free Consultation <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>`;
-                    submitBtn.classList.remove('opacity-60');
-                }
-            });
+            }
         });
     </script>
 </body>
