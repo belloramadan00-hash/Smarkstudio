@@ -23,6 +23,7 @@
 </head>
 <body class="bg-[#0a0f0d] text-white">
 
+    <!-- NAVBAR -->
     <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 flex justify-center">
         <nav class="glass-nav w-full max-w-6xl rounded-full px-6 py-3 flex justify-between items-center border border-[#2d3732] bg-[#131917]/80 backdrop-blur-md">
             <a href="index.html" class="flex items-center gap-2">
@@ -39,8 +40,11 @@
         </nav>
     </header>
 
+    <!-- MAIN CONSULTATION SECTION -->
     <section class="pt-32 pb-20 px-4 min-h-screen flex items-center justify-center">
         <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
+            <!-- Left Content -->
             <div class="flex flex-col justify-start">
                 <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-6 w-fit">
                     <span class="w-2 h-2 rounded-full bg-[#00d27e]"></span>
@@ -75,12 +79,10 @@
                 </div>
             </div>
 
-            <!-- HERE IS THE MAGIC CHANGE - JUST add the action and method -->
+            <!-- Right Content: Form -->
             <div class="bg-[#131917] border border-[#2d3732] rounded-3xl p-6 md:p-8 relative">
                 <div id="form-container">
-                    <!-- 1. ACTION POINTS TO FORMSPREE. 2. NO JS NEEDED FOR SENDING -->
-                    <form id="consultation-form" action="https://formspree.io/f/YOUR_UNIQUE_CODE_HERE" method="POST">
-                        
+                    <form id="consultation-form" novalidate>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label class="text-sm font-medium flex items-center gap-2 mb-2 text-gray-300">
@@ -178,7 +180,6 @@
                     </form>
                 </div>
 
-                <!-- Success Message (Hidden by default) -->
                 <div id="success-message" class="text-center py-10 hidden">
                     <div class="w-16 h-16 rounded-full bg-[#00d27e]/20 flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -199,7 +200,7 @@
       </div>
     </a>
 
-    <!-- SIMPLE JS FOR TOGGLES ONLY (No fetch code anymore!) -->
+    <!-- SCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             function setupToggleGroup(containerId, hiddenInputId) {
@@ -211,7 +212,7 @@
                     btn.addEventListener('click', () => {
                         buttons.forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
-                        hiddenInput.value = btn.getAttribute('data-value');
+                        hiddenInput.value = btn.getAttribute('data-value') || btn.innerText;
                         container.parentElement.classList.remove('has-error');
                     });
                 });
@@ -219,6 +220,79 @@
             setupToggleGroup('service-container', 'service-input');
             setupToggleGroup('budget-container', 'budget-input');
             setupToggleGroup('timeline-container', 'timeline-input');
+
+            const form = document.getElementById('consultation-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const formContainer = document.getElementById('form-container');
+            const successMsg = document.getElementById('success-message');
+
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    let isValid = true;
+                    form.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+
+                    const fullname = form.fullname.value.trim();
+                    if (!fullname) { form.fullname.parentElement.classList.add('has-error'); isValid = false; }
+                    const email = form.email.value.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!email || !emailRegex.test(email)) { form.email.parentElement.classList.add('has-error'); isValid = false; }
+
+                    const service = document.getElementById('service-input').value;
+                    if (!service) { document.getElementById('service-container').parentElement.classList.add('has-error'); isValid = false; }
+                    const budget = document.getElementById('budget-input').value;
+                    if (!budget) { document.getElementById('budget-container').parentElement.classList.add('has-error'); isValid = false; }
+                    const timeline = document.getElementById('timeline-input').value;
+                    if (!timeline) { document.getElementById('timeline-container').parentElement.classList.add('has-error'); isValid = false; }
+
+                    if (!isValid) {
+                        const firstError = form.querySelector('.has-error');
+                        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        return;
+                    }
+
+                    submitBtn.disabled = true;
+                    const originalBtnContent = submitBtn.innerHTML;
+                    submitBtn.innerHTML = `<span>Sending...</span>`;
+                    submitBtn.classList.add('opacity-60');
+
+                    try {
+                        const formData = {
+                            fullname: fullname,
+                            email: email,
+                            company: form.company.value.trim(),
+                            current_site: form.current_site.value.trim(),
+                            service: service,
+                            budget: budget,
+                            timeline: timeline,
+                            details: form.details.value.trim()
+                        };
+
+                        const response = await fetch('/api/send-email', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(formData)
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json().catch(() => ({}));
+                            throw new Error(errorData.error || 'Server returned an error');
+                        }
+
+                        formContainer.classList.add('hidden');
+                        successMsg.classList.remove('hidden');
+
+                    } catch (error) {
+                        console.error('Failed to send:', error);
+                        // THIS WILL NOW SHOW THE REAL ERROR IN THE BROWSER ALERT!
+                        alert(error.message || 'Oops! Something went wrong sending your request. Please try again or reach out on WhatsApp.');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnContent;
+                        submitBtn.classList.remove('opacity-60');
+                    }
+                });
+            }
         });
     </script>
 </body>
