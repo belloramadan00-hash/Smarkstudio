@@ -200,7 +200,7 @@
       </div>
     </a>
 
-    <!-- SCRIPT -->
+    <!-- BULLETPROOF SCRIPT WITH DEBUG LOGS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             function setupToggleGroup(containerId, hiddenInputId) {
@@ -279,12 +279,17 @@
                             throw new Error(errorData.error || 'Server returned an error');
                         }
 
+                        console.log('SUCCESS! Email sent. Hiding form and showing success message.');
+                        
+                        // 1. Hide the form container
                         formContainer.classList.add('hidden');
+                        
+                        // 2. Force the success message to be visible (Overriding any CSS issues)
                         successMsg.classList.remove('hidden');
+                        successMsg.style.display = 'block';
 
                     } catch (error) {
                         console.error('Failed to send:', error);
-                        // THIS WILL NOW SHOW THE REAL ERROR IN THE BROWSER ALERT!
                         alert(error.message || 'Oops! Something went wrong sending your request. Please try again or reach out on WhatsApp.');
                     } finally {
                         submitBtn.disabled = false;
