@@ -43,8 +43,6 @@
     <!-- MAIN CONSULTATION SECTION -->
     <section class="pt-32 pb-20 px-4 min-h-screen flex items-center justify-center">
         <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16">
-            
-            <!-- Left Content -->
             <div class="flex flex-col justify-start">
                 <div class="inline-flex items-center gap-2 bg-[#131917] border border-[#2d3732] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-6 w-fit">
                     <span class="w-2 h-2 rounded-full bg-[#00d27e]"></span>
@@ -79,7 +77,6 @@
                 </div>
             </div>
 
-            <!-- Right Content: Form -->
             <div class="bg-[#131917] border border-[#2d3732] rounded-3xl p-6 md:p-8 relative">
                 <div id="form-container">
                     <form id="consultation-form" novalidate>
@@ -180,7 +177,7 @@
                     </form>
                 </div>
 
-                <div id="success-message" class="text-center py-10 hidden">
+                <div id="success-message" class="text-center py-10" style="display: none;">
                     <div class="w-16 h-16 rounded-full bg-[#00d27e]/20 flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
@@ -200,7 +197,7 @@
       </div>
     </a>
 
-    <!-- BULLETPROOF SCRIPT WITH DEBUG LOGS -->
+    <!-- BULLETPROOF SCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             function setupToggleGroup(containerId, hiddenInputId) {
@@ -279,14 +276,15 @@
                             throw new Error(errorData.error || 'Server returned an error');
                         }
 
-                        console.log('SUCCESS! Email sent. Hiding form and showing success message.');
+                        console.log('SUCCESS! Email sent.');
                         
                         // 1. Hide the form container
                         formContainer.classList.add('hidden');
                         
-                        // 2. Force the success message to be visible (Overriding any CSS issues)
-                        successMsg.classList.remove('hidden');
+                        // 2. Force the success message to be visible (Bypassing any CSS issues)
                         successMsg.style.display = 'block';
+                        successMsg.style.visibility = 'visible';
+                        successMsg.style.opacity = '1';
 
                     } catch (error) {
                         console.error('Failed to send:', error);
