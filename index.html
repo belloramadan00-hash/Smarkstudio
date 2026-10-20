@@ -11,15 +11,15 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- NEW FAVICON (Points to your uploaded logo) -->
-    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Base64 SVG Favicon (Works instantly, bypasses cache) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d27e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23grad)'/%3E%3Ctext x='32' y='44' font-family='Arial, sans-serif' font-weight='bold' font-size='34' fill='%23000000' text-anchor='middle'%3ES'%3C/text%3E%3C/svg%3E">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: { dark: '#0a0f0d', card: '#131917', accent: '#00d27e', accent2: '#4ade80' }
+                        brand: { dark: '#0a0a0a', card: '#111111', accent: '#00d27e', border: '#222222' }
                     },
                     fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
@@ -28,519 +28,708 @@
     </script>
 
     <style>
+        /* FAQ Accordion */
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out; opacity: 0; }
-        .faq-answer.open { max-height: 500px; opacity: 1; }
+        .faq-answer.open { max-height: 300px; opacity: 1; }
         .faq-toggle-icon { transition: transform 0.3s ease; }
-        .faq-item.active .faq-toggle-icon { transform: rotate(45deg); }
+        .faq-item.active .faq-toggle-icon { transform: rotate(180deg); }
         
-        /* Portfolio Filter Animations */
-        .portfolio-item { transition: all 0.3s ease; }
+        /* Portfolio Filters */
         .portfolio-item.hidden { display: none; }
+        .filter-btn.active { background-color: #00d27e; color: #000; border-color: #00d27e; font-weight: 600; }
         
-        .service-card:hover { transform: translateY(-5px); }
+        /* Dashboard Mockup Graph */
+        .graph-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 3s linear forwards; }
+        @keyframes dash { to { stroke-dashoffset: 0; } }
     </style>
 </head>
-<body class="bg-[#0a0f0d] text-white overflow-x-hidden">
+<body class="bg-[#0a0a0a] text-gray-300 overflow-x-hidden antialiased selection:bg-[#00d27e] selection:text-black">
 
     <!-- NAVBAR -->
-    <header class="fixed top-0 left-0 w-full z-50 px-3 py-3 md:px-4 md:py-4 flex justify-center">
-        <nav class="glass-nav w-full max-w-6xl rounded-full px-4 py-3 md:px-6 flex justify-between items-center gap-2">
+    <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 flex justify-center">
+        <nav class="bg-[#111111]/80 backdrop-blur-md border border-[#222222] w-full max-w-6xl rounded-full px-5 py-3 flex justify-between items-center gap-2">
             <a href="#" class="flex items-center gap-2 group shrink-0">
-                <!-- NEW LOGO -->
-                <img src="logo.png" alt="SMARK Studio Logo" class="h-8 md:h-10 w-auto object-contain">
+                <!-- Logo -->
+                <div class="w-8 h-8 rounded-lg bg-[#00d27e] text-black flex items-center justify-center font-bold text-sm">S</div>
+                <span class="text-white font-bold text-lg tracking-tight">SMARK <span class="text-gray-500 font-normal">Studio</span></span>
             </a>
-            <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-gray-300">
-                <a href="#what-we-do" class="nav-link">What We Do</a>
-                <a href="#portfolio" class="nav-link">Our Work</a>
-                <a href="#packages" class="nav-link">Packages</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#faq" class="nav-link">FAQ</a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                <a href="#services" class="hover:text-white transition">Services</a>
+                <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
+                <a href="#pricing" class="hover:text-white transition">Pricing</a>
+                <a href="#about" class="hover:text-white transition">About</a>
+                <a href="#faq" class="hover:text-white transition">FAQ</a>
             </div>
-            <a href="consultation.html" class="bg-[#00d27e] text-black text-xs md:text-sm font-bold px-4 py-2.5 md:px-6 rounded-full hover:bg-[#4ade80] transition-all flex items-center gap-1 shrink-0 shadow-[0_0_15px_rgba(0,210,126,0.3)]">
-                Get Started
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+            <a href="consultation.html" class="bg-white text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-gray-200 transition-colors flex items-center gap-1 shrink-0">
+                Book a Consultation
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
             </a>
         </nav>
     </header>
 
     <!-- HERO SECTION -->
-    <section class="pt-32 pb-20 px-4 relative min-h-[100dvh] flex items-center">
-        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section class="pt-40 pb-24 px-4 relative flex items-center">
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
             <div class="relative z-10" data-aos="fade-right" data-aos-duration="1000">
-                <h1 class="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-6">
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-6 tracking-tight">
                     Your Brand.<br>
-                    <span class="text-[#00d27e] relative">Next Level.</span>
+                    <span class="text-[#00d27e]">Next Level.</span>
                 </h1>
                 
-                <p class="text-lg text-gray-400 max-w-lg mb-8 leading-relaxed">
+                <p class="text-lg text-gray-400 max-w-md mb-10 leading-relaxed">
                     We help businesses build a stronger online presence through thoughtful design, digital experiences and creative content.
                 </p>
 
-                <div class="flex flex-wrap gap-4 mb-12">
-                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-4 rounded-full hover:bg-[#4ade80] transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.3)]">
+                <div class="flex flex-wrap gap-4 mb-16">
+                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#4ade80] transition-all flex items-center gap-2">
                         Start Your Project
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                     </a>
-                    <a href="#portfolio" class="bg-[#131917] border border-[#2d3732] text-white font-bold px-8 py-4 rounded-full hover:bg-[#1a1f1c] transition-all flex items-center gap-2">
+                    <a href="#portfolio" class="bg-transparent border border-[#333333] text-white font-bold px-8 py-3.5 rounded-full hover:bg-[#111111] transition-all flex items-center gap-2">
                         View Our Work
                     </a>
                 </div>
+
+                <!-- Trusted By Strip -->
+                <div class="flex items-center gap-4">
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-teal-500 border-2 border-[#0a0a0a]"></div>
+                        <div class="w-8 h-8 rounded-full bg-blue-500 border-2 border-[#0a0a0a]"></div>
+                        <div class="w-8 h-8 rounded-full bg-purple-500 border-2 border-[#0a0a0a]"></div>
+                    </div>
+                    <div>
+                        <div class="flex text-[#00d27e] text-xs">★★★★★</div>
+                        <p class="text-xs text-gray-500 mt-0.5">Trusted by growing brands</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- New Hero Visual: Ecosystem (Website + Flyer + Video) -->
+            <!-- High-Fidelity Dashboard Mockup -->
             <div class="relative z-10 w-full flex justify-center lg:justify-end" data-aos="fade-left" data-aos-duration="1000">
-                <div class="relative w-full max-w-[500px] h-[400px] flex items-center justify-center">
+                <div class="relative w-full max-w-[500px]">
                     
-                    <!-- Website Mockup (Back) -->
-                    <div class="browser-mockup absolute top-0 right-0 w-[85%] p-3 transform rotate-2 hover:rotate-0 transition-transform duration-500 z-10">
-                        <div class="flex gap-1.5 mb-2"><div class="w-2 h-2 rounded-full bg-red-500/50"></div><div class="w-2 h-2 rounded-full bg-yellow-500/50"></div><div class="w-2 h-2 rounded-full bg-green-500/50"></div></div>
-                        <div class="h-32 bg-[#1a1f1c] rounded-lg flex items-center justify-center text-gray-600 text-sm border border-white/5">Website Design</div>
-                    </div>
-                    
-                    <!-- Flyer Mockup (Front Left) -->
-                    <div class="absolute bottom-4 left-0 w-[45%] h-48 bg-[#131917] border border-[#2d3732] rounded-xl p-4 transform -rotate-6 hover:rotate-0 transition-transform duration-500 z-20 shadow-2xl flex flex-col justify-between">
-                        <div class="w-8 h-8 rounded bg-[#00d27e]/20 flex items-center justify-center text-[#00d27e] text-xs">🎨</div>
+                    <!-- Floating Conversion Badge -->
+                    <div class="absolute -top-6 -left-6 bg-[#111111] border border-[#222222] p-3 rounded-2xl flex items-center gap-3 z-20 shadow-2xl">
+                        <div class="w-8 h-8 rounded-lg bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.306a11.95 11.95 0 015.814-5.518l2.74-1.22m0 0l-5.94-2.281m5.94 2.28l-2.28 5.941" /></svg>
+                        </div>
                         <div>
-                            <div class="h-2 w-3/4 bg-gray-600 rounded mb-2"></div>
-                            <div class="h-2 w-1/2 bg-gray-700 rounded"></div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">Conversion</div>
+                            <div class="text-[#00d27e] font-bold text-sm">+147%</div>
                         </div>
-                        <span class="text-xs font-bold text-[#00d27e]">Promo Flyer</span>
-                    </div>
-
-                    <!-- Video Mockup (Front Right) -->
-                    <div class="absolute bottom-12 right-4 w-[50%] h-32 bg-[#131917] border border-[#2d3732] rounded-xl p-4 transform rotate-3 hover:rotate-0 transition-transform duration-500 z-30 shadow-2xl flex items-center justify-center group cursor-pointer">
-                        <div class="w-12 h-12 rounded-full bg-[#00d27e] text-black flex items-center justify-center pl-1 group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" /></svg>
-                        </div>
-                        <span class="absolute bottom-3 right-4 text-xs font-bold text-gray-500">AI Video</span>
                     </div>
                     
+                    <!-- Browser Window -->
+                    <div class="bg-[#111111] border border-[#222222] rounded-2xl overflow-hidden shadow-2xl">
+                        <!-- Browser Header -->
+                        <div class="flex items-center gap-2 px-4 py-3 border-b border-[#222222] bg-[#0a0a0a]">
+                            <div class="flex gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+                            </div>
+                            <div class="flex-1 text-center">
+                                <div class="bg-[#111111] rounded-md text-[10px] text-gray-500 py-1 px-3 inline-block">smarkstudio.com/dashboard</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dashboard Content -->
+                        <div class="p-5">
+                            <!-- Top Stats -->
+                            <div class="grid grid-cols-3 gap-3 mb-4">
+                                <div class="bg-[#0a0a0a] border border-[#222222] p-3 rounded-xl">
+                                    <div class="text-[10px] text-gray-500 mb-1">Revenue</div>
+                                    <div class="text-white font-bold text-sm">$48.2k</div>
+                                    <div class="text-[#00d27e] text-[10px]">+12%</div>
+                                </div>
+                                <div class="bg-[#0a0a0a] border border-[#222222] p-3 rounded-xl">
+                                    <div class="text-[10px] text-gray-500 mb-1">Visitors</div>
+                                    <div class="text-white font-bold text-sm">24.1k</div>
+                                    <div class="text-[#00d27e] text-[10px]">+38%</div>
+                                </div>
+                                <div class="bg-[#0a0a0a] border border-[#222222] p-3 rounded-xl">
+                                    <div class="text-[10px] text-gray-500 mb-1">Bounce</div>
+                                    <div class="text-white font-bold text-sm">1.8%</div>
+                                    <div class="text-red-400 text-[10px]">-22%</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Graph Area -->
+                            <div class="bg-[#0a0a0a] border border-[#222222] p-4 rounded-xl h-32 relative">
+                                <svg viewBox="0 0 100 40" class="w-full h-full" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#00d27e" stop-opacity="0.2"/>
+                                            <stop offset="100%" stop-color="#00d27e" stop-opacity="0"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M0,35 C10,30 20,35 30,20 C40,10 50,25 60,15 C70,5 80,15 90,10 L100,5 L100,40 L0,40 Z" fill="url(#chartGrad)" />
+                                    <path d="M0,35 C10,30 20,35 30,20 C40,10 50,25 60,15 C70,5 80,15 90,10 L100,5" fill="none" stroke="#00d27e" stroke-width="1.5" class="graph-line" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Lighthouse Badge -->
+                    <div class="absolute -bottom-6 -right-6 bg-[#111111] border border-[#222222] p-3 rounded-2xl flex flex-col items-center justify-center z-20 shadow-2xl w-24">
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Lighthouse</div>
+                        <div class="text-[#00d27e] font-bold text-lg">100/100</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HOW WE HELP (Process) -->
-    <section class="py-20 px-4 border-y border-[#1a1f1c] bg-[#0d1311]">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">How We Help Your Business</h2>
-                <p class="text-gray-400">From idea to online presence, we've got you covered.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] text-center" data-aos="fade-up" data-aos-delay="0">
-                    <div class="text-[#00d27e] font-bold text-2xl mb-2">01</div>
-                    <h3 class="text-white font-bold mb-1">Get Noticed</h3>
-                    <p class="text-gray-400 text-sm">Professional flyers and promotional content.</p>
-                </div>
-                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-[#00d27e] font-bold text-2xl mb-2">02</div>
-                    <h3 class="text-white font-bold mb-1">Build Credibility</h3>
-                    <p class="text-gray-400 text-sm">A modern website that gives your business a professional home.</p>
-                </div>
-                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-[#00d27e] font-bold text-2xl mb-2">03</div>
-                    <h3 class="text-white font-bold mb-1">Get Attention</h3>
-                    <p class="text-gray-400 text-sm">AI promotional videos designed for social media and advertising.</p>
-                </div>
-                <div class="bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-[#00d27e] font-bold text-2xl mb-2">04</div>
-                    <h3 class="text-white font-bold mb-1">Grow Your Presence</h3>
-                    <p class="text-gray-400 text-sm">A consistent digital identity across all platforms.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHAT WE DO (Services) -->
-    <section class="py-20 px-4" id="what-we-do">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 text-center" data-aos="fade-up">What We Do</h2>
-            <p class="text-gray-400 text-center mb-12" data-aos="fade-up">Four core services designed to elevate your brand.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl service-card transition-all" data-aos="fade-up" data-aos-delay="50">
-                    <div class="text-4xl mb-4">🌐</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Websites</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Modern, responsive websites designed to make your business look credible and give customers a place to connect.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl service-card transition-all" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-4xl mb-4">🎨</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Graphic Design</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Professional promotional graphics for businesses, products, services, events, and social media.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl service-card transition-all" data-aos="fade-up" data-aos-delay="150">
-                    <div class="text-4xl mb-4">🎬</div>
-                    <h3 class="text-xl font-bold text-white mb-2">AI Videos</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Cinematic AI-powered promotional videos that help your business grab attention and tell its story.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl service-card transition-all" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-4xl mb-4">📱</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Product Design</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">User-centred interface and experience design for websites, apps, and digital products.</p>
-                </div>
-            </div>
-            
-            <!-- Complete Package Callout -->
-            <div class="mt-8 bg-[#00d27e]/10 border border-[#00d27e]/30 rounded-2xl p-8 text-center" data-aos="fade-up">
-                <h3 class="text-xl font-bold text-white mb-2">✨ Complete Online Presence</h3>
-                <p class="text-gray-300 max-w-2xl mx-auto">Need everything? We combine websites, flyers, and promotional videos into one complete package built around your business.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHO WE HELP -->
-    <section class="py-16 border-y border-[#1a1f1c] bg-[#0d1311]">
+    <!-- TRUSTED BY SECTION -->
+    <section class="py-12 border-y border-[#222222] bg-[#0a0a0a]">
         <div class="max-w-6xl mx-auto px-4 text-center">
-            <div class="text-gray-500 text-xs uppercase tracking-widest font-semibold mb-8" data-aos="fade-up">Built For Businesses That Want To Be Seen</div>
-            <div class="flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="100">
-                <span class="tag-pill">Restaurants</span>
-                <span class="tag-pill">Real Estate</span>
-                <span class="tag-pill">Fashion</span>
-                <span class="tag-pill">Beauty</span>
-                <span class="tag-pill">Food & Grocery</span>
-                <span class="tag-pill">Events</span>
-                <span class="tag-pill">E-commerce</span>
-                <span class="tag-pill">Startups</span>
-                <span class="tag-pill">Local Businesses</span>
+            <div class="text-gray-600 text-xs uppercase tracking-widest font-semibold mb-8" data-aos="fade-up">Trusted by startups, local businesses, and growing brands</div>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 text-lg font-bold text-white" data-aos="fade-up" data-aos-delay="100">
+                <span>Finora</span>
+                <span>Atlas Labs</span>
+                <span>Brightleaf</span>
+                <span>Oakhouse</span>
+                <span>Pulsegrid</span>
+                <span>Northwind</span>
             </div>
         </div>
     </section>
 
-    <!-- PORTFOLIO (Selected Work) -->
-    <section class="py-20 px-4" id="portfolio">
+    <!-- STATS SECTION -->
+    <section class="py-20 px-4">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 text-center" data-aos="fade-up">Selected Work</h2>
-            <p class="text-gray-400 text-center mb-8" data-aos="fade-up">A look at the digital experiences and creative work we're building.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" data-aos="fade-up">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-2xl text-center">
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">200<span class="text-[#00d27e]">+</span></h3>
+                    <p class="text-sm text-gray-500">Projects Delivered</p>
+                </div>
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-2xl text-center">
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">98<span class="text-[#00d27e]">%</span></h3>
+                    <p class="text-sm text-gray-500">Client Satisfaction</p>
+                </div>
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-2xl text-center">
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">24<span class="text-[#00d27e]">/7</span></h3>
+                    <p class="text-sm text-gray-500">Support Coverage</p>
+                </div>
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-2xl text-center">
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">5<span class="text-[#00d27e]">★</span></h3>
+                    <p class="text-sm text-gray-500">Average Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="py-24 px-4 border-t border-[#222222]" id="services">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16" data-aos="fade-up">
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">01 — Services</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">Four ways we help your<br>brand show up online.</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Service 1 -->
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-10 h-10 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Website Design & Development</h3>
+                    <p class="text-gray-400 text-sm mb-6 max-w-sm">Custom, responsive websites designed around your goals, audience and needs.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Business websites & landing pages</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Responsive layouts</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Contact forms & WhatsApp integration</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Basic on-page SEO</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Deployment & agreed integrations</li>
+                    </ul>
+                    <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-10 h-10 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Graphic Design</h3>
+                    <p class="text-gray-400 text-sm mb-6 max-w-sm">Visual content that helps you communicate professionally and promote what you sell.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Promotional flyers</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Social media graphics</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Marketing & advertising designs</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Other agreed promotional assets</li>
+                    </ul>
+                    <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-10 h-10 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" /></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">AI-Powered Promotional Videos</h3>
+                    <p class="text-gray-400 text-sm mb-6 max-w-sm">Promotional videos produced with suitable AI-assisted tools and editing workflows.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Business advertisements</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Product or service promos</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Short-form social video</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> AI presenter or scene-based ads</li>
+                    </ul>
+                    <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-10 h-10 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Product Design (UI/UX)</h3>
+                    <p class="text-gray-400 text-sm mb-6 max-w-sm">Interface and experience design for digital products. Design only — app development is not included unless separately agreed.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Website & app interface design</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Wireframes & prototypes</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> User flows</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-300"><svg class="w-4 h-4 text-[#00d27e]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Components & design systems where in scope</li>
+                    </ul>
+                    <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section class="py-24 px-4 border-t border-[#222222]">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16" data-aos="fade-up">
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">02 — How We Work</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">A process with no<br>black boxes.</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 relative" data-aos="fade-up">
+                <!-- Connecting Line -->
+                <div class="hidden md:block absolute top-6 left-[10%] right-[10%] h-px bg-[#222222] z-0"></div>
+                
+                <!-- Step 1 -->
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-full bg-[#0a0a0a] border border-[#222222] flex items-center justify-center text-[#00d27e] font-bold mb-4">1</div>
+                    <h4 class="text-white font-bold mb-2">Discovery</h4>
+                    <p class="text-sm text-gray-500">Goals, audience, and the metric we're moving.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-full bg-[#0a0a0a] border border-[#222222] flex items-center justify-center text-[#00d27e] font-bold mb-4">2</div>
+                    <h4 class="text-white font-bold mb-2">Design</h4>
+                    <p class="text-sm text-gray-500">Art direction, layout systems, interactive prototype.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-full bg-[#0a0a0a] border border-[#222222] flex items-center justify-center text-[#00d27e] font-bold mb-4">3</div>
+                    <h4 class="text-white font-bold mb-2">Development</h4>
+                    <p class="text-sm text-gray-500">Clean, component-driven build with real content.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-full bg-[#0a0a0a] border border-[#222222] flex items-center justify-center text-[#00d27e] font-bold mb-4">4</div>
+                    <h4 class="text-white font-bold mb-2">Testing</h4>
+                    <p class="text-sm text-gray-500">Performance, accessibility, cross-device QA.</p>
+                </div>
+                <!-- Step 5 -->
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-full bg-[#0a0a0a] border border-[#222222] flex items-center justify-center text-[#00d27e] font-bold mb-4">5</div>
+                    <h4 class="text-white font-bold mb-2">Launch</h4>
+                    <p class="text-sm text-gray-500">Deploy, measure, iterate on what the data says.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section class="py-24 px-4 border-t border-[#222222]" id="portfolio">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-10" data-aos="fade-up">
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">03 — Portfolio</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">Selected Work</h2>
+                <p class="text-gray-400">A look at the digital experiences and creative work we're building.</p>
+            </div>
             
             <!-- Filters -->
-            <div class="flex flex-wrap justify-center gap-2 mb-12" data-aos="fade-up">
-                <button onclick="filterPortfolio('all')" class="filter-btn active px-4 py-2 text-sm font-medium rounded-full border border-[#00d27e] bg-[#00d27e]/10 text-[#00d27e]">All</button>
-                <button onclick="filterPortfolio('websites')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#2d3732] text-gray-400 hover:text-white">Websites</button>
-                <button onclick="filterPortfolio('flyers')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#2d3732] text-gray-400 hover:text-white">Flyers</button>
-                <button onclick="filterPortfolio('videos')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#2d3732] text-gray-400 hover:text-white">AI Videos</button>
-                <button onclick="filterPortfolio('product')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#2d3732] text-gray-400 hover:text-white">Product Design</button>
+            <div class="flex flex-wrap gap-2 mb-10" data-aos="fade-up">
+                <button onclick="filterPortfolio('all')" class="filter-btn active px-4 py-2 text-sm font-medium rounded-full border border-[#333] text-gray-400 hover:text-white">All</button>
+                <button onclick="filterPortfolio('websites')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#333] text-gray-400 hover:text-white">Websites</button>
+                <button onclick="filterPortfolio('graphic')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#333] text-gray-400 hover:text-white">Graphic Design</button>
+                <button onclick="filterPortfolio('videos')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#333] text-gray-400 hover:text-white">AI Videos</button>
+                <button onclick="filterPortfolio('product')" class="filter-btn px-4 py-2 text-sm font-medium rounded-full border border-[#333] text-gray-400 hover:text-white">Product Design</button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="portfolio-grid">
                 
-                <!-- Website Project -->
-                <div class="portfolio-item bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all" data-category="websites" data-aos="fade-up">
-                    <div class="bg-[#1a1f1c] h-48 rounded-xl mb-4 flex items-center justify-center text-gray-500 border border-white/5 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-50" alt="TechReview">
-                        <span class="relative z-10 font-bold text-white bg-black/50 px-3 py-1 rounded">Web Platform</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white">TechReview</h3>
-                    <p class="text-gray-400 text-sm mt-1 mb-4">Independent product review platform built to help buyers make informed decisions.</p>
-                    <a href="https://techreview-fawn.vercel.app/index.html" target="_blank" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">View Live Site <span>→</span></a>
-                </div>
-
-                <!-- Website Project -->
-                <div class="portfolio-item bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all" data-category="websites" data-aos="fade-up">
-                    <div class="bg-[#1a1f1c] h-48 rounded-xl mb-4 flex items-center justify-center text-gray-500 border border-white/5 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=2069&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-50" alt="SMARK Studio">
-                        <span class="relative z-10 font-bold text-white bg-black/50 px-3 py-1 rounded">Agency Website</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white">SMARK Studio</h3>
-                    <p class="text-gray-400 text-sm mt-1 mb-4">Corporate agency website showcasing modern web design and creativity.</p>
-                    <a href="#" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline opacity-50 pointer-events-none">Currently Viewing</a>
-                </div>
-
-                <!-- Graphic Design Mockup -->
-                <div class="portfolio-item bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all" data-category="flyers" data-aos="fade-up">
-                    <div class="bg-gradient-to-br from-[#1a1f1c] to-[#0d1311] h-48 rounded-xl mb-4 flex items-center justify-center border border-white/5">
-                        <span class="text-[#00d27e] font-bold tracking-widest uppercase text-sm border border-[#00d27e]/30 px-4 py-2 rounded-full">Flyer Concept</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white">Restaurant Promo Flyer</h3>
-                    <p class="text-gray-400 text-sm mt-1 mb-4">Vibrant promotional graphic designed for social media marketing.</p>
-                    <span class="text-gray-500 text-xs italic">Mockup (In Progress)</span>
-                </div>
-
-                <!-- AI Video Mockup -->
-                <div class="portfolio-item bg-[#131917] p-6 rounded-2xl border border-[#1a1f1c] hover:border-[#2d3732] transition-all" data-category="videos" data-aos="fade-up">
-                    <div class="bg-[#1a1f1c] h-48 rounded-xl mb-4 flex items-center justify-center border border-white/5 relative group cursor-pointer">
-                        <div class="w-12 h-12 rounded-full bg-[#00d27e] text-black flex items-center justify-center pl-1 group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" /></svg>
+                <!-- Project 1 -->
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group" data-category="websites" data-aos="fade-up">
+                    <div class="h-64 bg-[#0a0a0a] relative overflow-hidden">
+                        <!-- Abstract representation of the website -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-[80%] h-[80%] border border-[#222] rounded-lg p-4 transform group-hover:scale-105 transition-transform duration-500">
+                                <div class="w-1/3 h-2 bg-[#333] mb-2 rounded"></div>
+                                <div class="w-1/2 h-2 bg-[#333] mb-4 rounded"></div>
+                                <div class="w-full h-20 bg-[#00d27e]/10 rounded border border-[#00d27e]/20"></div>
+                            </div>
                         </div>
                     </div>
-                    <h3 class="text-xl font-bold text-white">AI Promo Video</h3>
-                    <p class="text-gray-400 text-sm mt-1 mb-4">Cinematic short-form video concept for product advertising.</p>
-                    <span class="text-gray-500 text-xs italic">Coming Soon</span>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-white">Finora Dashboard</h3>
+                            <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-2 py-1 rounded-full border border-[#00d27e]/20">Web Platform</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Financial infrastructure for the next generation of companies.</p>
+                        <a href="#" class="text-[#00d27e] text-sm font-semibold hover:underline">View Case Study →</a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group" data-category="websites" data-aos="fade-up">
+                    <div class="h-64 bg-[#0a0a0a] relative overflow-hidden">
+                         <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-[80%] h-[80%] border border-[#222] rounded-lg p-4 transform group-hover:scale-105 transition-transform duration-500 flex flex-col items-center justify-center">
+                                <div class="text-white font-serif italic text-2xl mb-2">Veridian Heritage</div>
+                                <div class="w-16 h-1 bg-[#00d27e]"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-white">Veridian Watches</h3>
+                            <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-2 py-1 rounded-full border border-[#00d27e]/20">E-commerce</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Premium product landing page and brand identity.</p>
+                        <a href="#" class="text-[#00d27e] text-sm font-semibold hover:underline">View Case Study →</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 (Graphic) -->
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group" data-category="graphic" data-aos="fade-up">
+                    <div class="h-64 bg-[#0a0a0a] relative overflow-hidden flex items-center justify-center">
+                        <div class="w-32 h-40 bg-gradient-to-br from-[#00d27e] to-[#004d2e] rounded-lg shadow-2xl transform rotate-3 group-hover:rotate-0 transition-transform duration-500 flex flex-col items-center justify-center text-black p-4 text-center">
+                            <div class="font-bold text-lg leading-tight">SUMMER<br>SALE</div>
+                            <div class="text-xs mt-2 opacity-70">50% OFF</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-white">Promo Flyer Concept</h3>
+                            <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-2 py-1 rounded-full border border-[#00d27e]/20">Graphic Design</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Social media promotional graphic design.</p>
+                        <a href="#" class="text-[#00d27e] text-sm font-semibold hover:underline">View Details →</a>
+                    </div>
+                </div>
+
+                <!-- Project 4 (Video) -->
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group" data-category="videos" data-aos="fade-up">
+                    <div class="h-64 bg-[#0a0a0a] relative overflow-hidden flex items-center justify-center">
+                        <div class="w-16 h-16 rounded-full bg-[#00d27e]/20 border border-[#00d27e]/40 flex items-center justify-center text-[#00d27e] group-hover:scale-110 transition-transform cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" /></svg>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-white">AI Promo Video</h3>
+                            <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-2 py-1 rounded-full border border-[#00d27e]/20">AI Video</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Cinematic 15-second social media advertisement.</p>
+                        <a href="#" class="text-[#00d27e] text-sm font-semibold hover:underline">Watch Video →</a>
+                    </div>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <!-- BUSINESS TRANSFORMATIONS -->
-    <section class="py-20 px-4 bg-[#0d1311] border-y border-[#1a1f1c]">
-        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">We Transform How Businesses Appear Online</h2>
-            <p class="text-gray-400 mb-12">We don't just create content. We build a complete digital presence.</p>
+    <!-- WHY CHOOSE US -->
+    <section class="py-24 px-4 border-t border-[#222222]" id="about">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <!-- Left Visual (Abstract Green Glow) -->
+            <div class="relative h-[400px] bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden flex items-center justify-center" data-aos="fade-right">
+                <div class="absolute inset-0 bg-gradient-to-br from-[#00d27e]/20 via-transparent to-transparent blur-3xl"></div>
+                <div class="relative z-10 w-48 h-32 bg-[#0a0a0a] border border-[#333] rounded-xl transform rotate-12 shadow-[0_0_50px_rgba(0,210,126,0.2)]"></div>
+                <div class="absolute z-0 w-32 h-32 border border-[#00d27e]/30 rounded-full animate-pulse"></div>
+            </div>
             
-            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
-                <div class="bg-[#131917] border border-[#2d3732] p-6 rounded-2xl w-full md:w-1/3 opacity-60">
-                    <h4 class="text-gray-500 text-sm font-bold uppercase mb-2">Before</h4>
-                    <p class="text-gray-400 text-sm">Poor or ordinary online presence. Hard to find, hard to trust.</p>
-                </div>
-                
-                <div class="text-[#00d27e] font-bold text-2xl">↓</div>
-                
-                <div class="bg-[#1a211d] border-2 border-[#00d27e] p-6 rounded-2xl w-full md:w-1/3 shadow-[0_0_20px_rgba(0,210,126,0.15)] transform md:scale-110">
-                    <h4 class="text-[#00d27e] text-sm font-bold uppercase mb-2">SMARK Studio</h4>
-                    <p class="text-white text-sm font-semibold">Website + Flyer + AI Video</p>
-                </div>
-
-                <div class="text-[#00d27e] font-bold text-2xl">↓</div>
-                
-                <div class="bg-[#131917] border border-[#2d3732] p-6 rounded-2xl w-full md:w-1/3">
-                    <h4 class="text-white text-sm font-bold uppercase mb-2">After</h4>
-                    <p class="text-gray-300 text-sm">Professional, cohesive, and ready to attract customers.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHY SMARK (Updated) -->
-    <section class="py-20 px-4" id="about">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-12" data-aos="fade-up">Why Businesses Choose SMARK</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl" data-aos="fade-up">
-                    <div class="text-4xl mb-4">🎯</div>
-                    <h4 class="font-bold text-white mb-2">Built Around Your Business</h4>
-                    <p class="text-gray-400 text-sm">We don't give every business the same generic design. Everything is tailored to you.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-4xl mb-4">🎨</div>
-                    <h4 class="font-bold text-white mb-2">One Brand, Multiple Formats</h4>
-                    <p class="text-gray-400 text-sm">Your website, flyers and videos are designed to feel like they belong to the same business.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-4xl mb-4">⚡</div>
-                    <h4 class="font-bold text-white mb-2">Designed to Get Attention</h4>
-                    <p class="text-gray-400 text-sm">We create content that looks good on websites and stops the scroll on social media.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-4xl mb-4">📱</div>
-                    <h4 class="font-bold text-white mb-2">Made for Today's Customers</h4>
-                    <p class="text-gray-400 text-sm">Your customers are on phones, social media and messaging apps. We design for that reality.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="400">
-                    <div class="text-4xl mb-4">🤝</div>
-                    <h4 class="font-bold text-white mb-2">Direct Communication</h4>
-                    <p class="text-gray-400 text-sm">You work directly with the people creating your project. No middlemen.</p>
-                </div>
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="500">
-                    <div class="text-4xl mb-4">💡</div>
-                    <h4 class="font-bold text-white mb-2">One Studio, Multiple Solutions</h4>
-                    <p class="text-gray-400 text-sm">Instead of finding separate people for your website, graphics, and videos, SMARK brings them together.</p>
+            <!-- Right Content -->
+            <div data-aos="fade-left">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Why Businesses Choose SMARK</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-4 h-4 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Strategy Before Design</h4>
+                        <p class="text-sm text-gray-500">We understand your goals before deciding on a solution.</p>
+                    </div>
+                    <div>
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-4 h-4 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Purposeful Creativity</h4>
+                        <p class="text-sm text-gray-500">Every design has a clear objective.</p>
+                    </div>
+                    <div>
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-4 h-4 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Consistent Brand Identity</h4>
+                        <p class="text-sm text-gray-500">Cohesive visuals across web, print and video.</p>
+                    </div>
+                    <div>
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-4 h-4 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Direct Communication</h4>
+                        <p class="text-sm text-gray-500">Clear, honest updates throughout the project.</p>
+                    </div>
+                    <div>
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-4 h-4 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> User-Focused Design</h4>
+                        <p class="text-sm text-gray-500">Usability first, across supported devices.</p>
+                    </div>
+                    <div>
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-4 h-4 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Built Around Your Needs</h4>
+                        <p class="text-sm text-gray-500">We recommend the right service and scope for you.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PACKAGES -->
-    <section class="py-20 px-4 bg-[#0d1311]" id="packages">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-5xl font-bold text-white text-center mb-4" data-aos="fade-up">Our Packages</h2>
-            <p class="text-gray-400 text-center mb-12" data-aos="fade-up">Choose the perfect starting point for your business.</p>
+    <!-- TESTIMONIALS -->
+    <section class="py-24 px-4 border-t border-[#222222]">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-end mb-12" data-aos="fade-up">
+                <div>
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">05 — Clients</p>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">Words from the<br>people who paid.</h2>
+                </div>
+                <div class="hidden md:flex gap-2">
+                    <button class="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg></button>
+                    <button class="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></button>
+                </div>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Testimonial Card -->
+            <div class="bg-[#111111] border border-[#222222] p-8 md:p-12 rounded-3xl" data-aos="fade-up">
+                <div class="flex text-[#00d27e] text-lg mb-6">★★★★★</div>
+                <blockquote class="text-xl md:text-3xl text-white font-medium leading-relaxed mb-10 max-w-4xl">
+                    “Every handoff was clean, every deadline was met, and the site scores 100 on performance. Rare combination.”
+                </blockquote>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-[#00d27e]/20 border border-[#00d27e]/30 flex items-center justify-center text-[#00d27e] font-bold">DR</div>
+                    <div>
+                        <div class="text-white font-bold">Daniel Reyes</div>
+                        <div class="text-sm text-gray-500">Head of Growth, Finora</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PACKAGES SECTION -->
+    <section class="py-24 px-4 border-t border-[#222222]" id="pricing">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-12" data-aos="fade-up">
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">06 — Packages</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">Packages for every stage.</h2>
+                <p class="text-gray-400 max-w-2xl">Final pricing depends on agreed scope, revisions and timeline. Every package starts with a quote.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-aos="fade-up">
                 
                 <!-- Package 1 -->
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-3xl hover:border-[#2d3732] transition-all text-left flex flex-col" data-aos="fade-up">
-                    <h3 class="text-xl font-bold text-white mb-2">Brand Essentials</h3>
-                    <p class="text-gray-400 text-sm mb-4">For businesses that primarily need promotional graphics.</p>
-                    <div class="text-2xl font-bold text-[#00d27e] mb-6">Starting from ₦XX,XXX</div>
-                    <ul class="text-gray-300 text-sm space-y-3 mb-8 flex-grow">
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Promotional flyer / graphic design</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Agreed design direction</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Specified number of revisions</li>
+                <div class="bg-[#111111] border border-[#222222] p-6 rounded-2xl flex flex-col hover:border-[#333] transition">
+                    <h3 class="text-lg font-bold text-white mb-2">Brand Essentials</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-10">For businesses that mainly need promotional graphics.</p>
+                    <div class="text-2xl font-bold text-white mb-6">Request a Quote</div>
+                    <ul class="text-sm text-gray-400 space-y-3 mb-8 flex-grow">
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> A defined flyer or graphic-design deliverable</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Agreed design direction</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> A set number of revisions</li>
                     </ul>
-                    <a href="consultation.html" class="block w-full py-3 rounded-full border border-[#2d3732] text-center text-gray-300 hover:border-[#00d27e] hover:text-[#00d27e] transition-all mt-auto">Get Started</a>
+                    <a href="getquote.html" class="block w-full py-3 rounded-xl border border-[#333] text-center text-sm text-gray-300 hover:bg-[#222] transition">Get a Quote</a>
                 </div>
 
                 <!-- Package 2 -->
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-3xl hover:border-[#2d3732] transition-all text-left flex flex-col" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold text-white mb-2">Digital Presence</h3>
-                    <p class="text-gray-400 text-sm mb-4">For businesses that need a professional website.</p>
-                    <div class="text-2xl font-bold text-[#00d27e] mb-6">Starting from ₦XX,XXX</div>
-                    <ul class="text-gray-300 text-sm space-y-3 mb-8 flex-grow">
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Website with agreed pages</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Responsive design</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Contact / WhatsApp integration</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Basic on-page SEO</li>
+                <div class="bg-[#111111] border border-[#222222] p-6 rounded-2xl flex flex-col hover:border-[#333] transition">
+                    <h3 class="text-lg font-bold text-white mb-2">Digital Presence</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-10">For businesses that need a professional website.</p>
+                    <div class="text-2xl font-bold text-white mb-6">Request a Quote</div>
+                    <ul class="text-sm text-gray-400 space-y-3 mb-8 flex-grow">
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Website with an agreed number of pages</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Responsive design</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Contact or WhatsApp integration</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Basic on-page SEO</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Deployment (subject to hosting & domain)</li>
                     </ul>
-                    <a href="consultation.html" class="block w-full py-3 rounded-full border border-[#2d3732] text-center text-gray-300 hover:border-[#00d27e] hover:text-[#00d27e] transition-all mt-auto">Get Started</a>
+                    <a href="getquote.html" class="block w-full py-3 rounded-xl border border-[#333] text-center text-sm text-gray-300 hover:bg-[#222] transition">Get a Quote</a>
                 </div>
 
-                <!-- Package 3 (Recommended) -->
-                <div class="bg-[#1a211d] border-2 border-[#00d27e] p-6 rounded-3xl text-left relative transform md:scale-105 shadow-[0_0_30px_rgba(0,210,126,0.1)] flex flex-col" data-aos="fade-up" data-aos-delay="200">
-                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#00d27e] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide">★ Recommended</span>
-                    <h3 class="text-xl font-bold text-white mb-2">Brand Growth</h3>
-                    <p class="text-gray-400 text-sm mb-4">Website and promotional content working together.</p>
-                    <div class="text-2xl font-bold text-[#00d27e] mb-6">Starting from ₦XX,XXX</div>
-                    <ul class="text-gray-300 text-sm space-y-3 mb-8 flex-grow">
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Website with defined scope</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Promotional flyer / graphic design</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> One AI promotional video</li>
+                <!-- Package 3 (Highlighted) -->
+                <div class="bg-[#111111] border-2 border-[#00d27e] p-6 rounded-2xl flex flex-col relative transform md:-translate-y-2 shadow-[0_0_30px_rgba(0,210,126,0.1)]">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#00d27e] text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide">Recommended</span>
+                    <h3 class="text-lg font-bold text-white mb-2">Brand Growth</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-10">A website and promotional content working together.</p>
+                    <div class="text-2xl font-bold text-white mb-6">Request a Quote</div>
+                    <ul class="text-sm text-gray-300 space-y-3 mb-8 flex-grow">
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Website with a defined scope</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> A flyer or graphic-design deliverable</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> One AI promotional video (agreed length & format)</li>
                     </ul>
-                    <a href="consultation.html" class="block w-full py-3 rounded-full bg-[#00d27e] text-black text-center font-bold hover:bg-[#4ade80] transition-all mt-auto">Get Started</a>
+                    <a href="getquote.html" class="block w-full py-3 rounded-xl bg-[#00d27e] text-center text-sm text-black font-bold hover:bg-[#4ade80] transition">Get a Quote</a>
                 </div>
 
                 <!-- Package 4 -->
-                <div class="bg-[#131917] border border-[#1a1f1c] p-6 rounded-3xl hover:border-[#2d3732] transition-all text-left flex flex-col" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-xl font-bold text-white mb-2">Complete Digital Brand</h3>
-                    <p class="text-gray-400 text-sm mb-4">A broader set of creative and digital services.</p>
-                    <div class="text-2xl font-bold text-[#00d27e] mb-6">Starting from ₦XX,XXX</div>
-                    <ul class="text-gray-300 text-sm space-y-3 mb-8 flex-grow">
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Website design & development</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Promotional graphic design</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> One AI promotional video</li>
-                        <li class="flex items-start gap-2"><span class="text-[#00d27e] mt-0.5">✓</span> Product design / UI/UX deliverable</li>
+                <div class="bg-[#111111] border border-[#222222] p-6 rounded-2xl flex flex-col hover:border-[#333] transition">
+                    <h3 class="text-lg font-bold text-white mb-2">Complete Digital Brand</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-10">A broader set of creative and digital services.</p>
+                    <div class="text-2xl font-bold text-white mb-6">Request a Quote</div>
+                    <ul class="text-sm text-gray-400 space-y-3 mb-8 flex-grow">
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Website design & development</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Promotional graphic design</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> One AI promotional video</li>
+                        <li class="flex items-start gap-2"><svg class="w-4 h-4 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> A defined UI/UX deliverable (e.g. set of screens or a prototype)</li>
                     </ul>
-                    <a href="consultation.html" class="block w-full py-3 rounded-full border border-[#2d3732] text-center text-gray-300 hover:border-[#00d27e] hover:text-[#00d27e] transition-all mt-auto">Get Started</a>
+                    <a href="getquote.html" class="block w-full py-3 rounded-xl border border-[#333] text-center text-sm text-gray-300 hover:bg-[#222] transition">Get a Quote</a>
                 </div>
             </div>
+            
+            <!-- Custom Service Callout -->
+            <div class="mt-6 bg-[#111111] border border-[#222222] p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4" data-aos="fade-up">
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-1">Need just one service?</h4>
+                    <p class="text-gray-500 text-sm">Whether you need a website, a flyer, an AI promotional video or product design, we can help you choose the right solution for your project.</p>
+                </div>
+                <div class="flex gap-3 shrink-0">
+                    <a href="getquote.html" class="bg-[#00d27e] text-black font-bold px-6 py-2.5 rounded-full hover:bg-[#4ade80] transition text-sm">Get a Quote</a>
+                    <a href="consultation.html" class="bg-transparent border border-[#333] text-white font-bold px-6 py-2.5 rounded-full hover:bg-[#222] transition text-sm">Book a Consultation</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <!-- Custom Service Option -->
-            <div class="mt-12 text-center bg-[#131917] border border-[#2d3732] p-8 rounded-2xl max-w-3xl mx-auto" data-aos="fade-up">
-                <h3 class="text-xl font-bold text-white mb-2">Need just one service?</h3>
-                <p class="text-gray-400 mb-6">Whether you need a website, a flyer, an AI promotional video or product design, we can help you choose the right solution for your project.</p>
+    <!-- FAQ SECTION -->
+    <section class="py-24 px-4 border-t border-[#222222]" id="faq">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+            
+            <!-- Left Side -->
+            <div class="md:col-span-1" data-aos="fade-right">
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">07 — FAQ</p>
+                <h2 class="text-3xl font-bold text-white mb-4">Common questions.</h2>
+                <p class="text-sm text-gray-500 mb-6">Still have a question? <a href="consultation.html" class="text-[#00d27e] hover:underline">Contact us.</a></p>
+            </div>
+
+            <!-- Right Side (Accordion) -->
+            <div class="md:col-span-2" data-aos="fade-left">
+                
+                <div class="faq-item border-b border-[#222222] py-5 cursor-pointer group">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-medium text-white group-hover:text-[#00d27e] transition">What services does SMARK Studio offer?</h3>
+                        <svg class="faq-toggle-icon w-5 h-5 text-gray-500 group-hover:text-[#00d27e] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div class="faq-answer mt-3 text-gray-400 text-sm leading-relaxed">SMARK Studio helps businesses build a professional online presence through websites, promotional flyers, AI-powered videos, and product design (UI/UX).</div>
+                </div>
+
+                <div class="faq-item border-b border-[#222222] py-5 cursor-pointer group">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-medium text-white group-hover:text-[#00d27e] transition">How much do your services cost?</h3>
+                        <svg class="faq-toggle-icon w-5 h-5 text-gray-500 group-hover:text-[#00d27e] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div class="faq-answer mt-3 text-gray-400 text-sm leading-relaxed">Pricing depends on the specific scope and package. We offer clear starting prices for our packages. For custom projects, contact us for a tailored quote with no obligation.</div>
+                </div>
+
+                <div class="faq-item border-b border-[#222222] py-5 cursor-pointer group">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-medium text-white group-hover:text-[#00d27e] transition">How long does a project take?</h3>
+                        <svg class="faq-toggle-icon w-5 h-5 text-gray-500 group-hover:text-[#00d27e] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div class="faq-answer mt-3 text-gray-400 text-sm leading-relaxed">Timelines vary based on the service. Websites typically take 1-4 weeks, while flyers and AI videos can be delivered faster. We provide a clear timeline before starting.</div>
+                </div>
+
+                <div class="faq-item border-b border-[#222222] py-5 cursor-pointer group">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-medium text-white group-hover:text-[#00d27e] transition">Can I combine multiple services?</h3>
+                        <svg class="faq-toggle-icon w-5 h-5 text-gray-500 group-hover:text-[#00d27e] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div class="faq-answer mt-3 text-gray-400 text-sm leading-relaxed">Yes! Our "Brand Growth" and "Complete Digital Brand" packages are designed specifically for businesses that want a cohesive online presence across multiple formats.</div>
+                </div>
+
+                <div class="faq-item border-b border-[#222222] py-5 cursor-pointer group">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-medium text-white group-hover:text-[#00d27e] transition">Can you redesign an existing website or design?</h3>
+                        <svg class="faq-toggle-icon w-5 h-5 text-gray-500 group-hover:text-[#00d27e] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div class="faq-answer mt-3 text-gray-400 text-sm leading-relaxed">Yes. If your current website or promotional materials feel outdated, we can redesign them with a modern look, better performance, and an improved user experience.</div>
+                </div>
+
+                <div class="faq-item border-b border-[#222222] py-5 cursor-pointer group">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-medium text-white group-hover:text-[#00d27e] transition">How do payments, revisions and delivery work?</h3>
+                        <svg class="faq-toggle-icon w-5 h-5 text-gray-500 group-hover:text-[#00d27e] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div class="faq-answer mt-3 text-gray-400 text-sm leading-relaxed">We typically require a deposit to begin. The number of revisions and the final delivery format are agreed upon in the project scope before we start.</div>
+                </div>
+                
+                <div class="faq-item border-b border-[#222222] py-5 cursor-pointer group">
+                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-medium text-white group-hover:text-[#00d27e] transition">How do I get started?</h3>
+                        <svg class="faq-toggle-icon w-5 h-5 text-gray-500 group-hover:text-[#00d27e] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div class="faq-answer mt-3 text-gray-400 text-sm leading-relaxed">Choose a package or contact us for a quote. We'll discuss your business, goals, and what you need before starting.</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA SECTION -->
+    <section class="py-24 px-4">
+        <div class="max-w-6xl mx-auto bg-gradient-to-b from-[#0a2e1f] to-[#0a0a0a] border border-[#00d27e]/20 rounded-3xl p-12 md:p-24 text-center relative overflow-hidden" data-aos="fade-up">
+            <div class="absolute inset-0 bg-[#00d27e]/5 blur-3xl rounded-full"></div>
+            <div class="relative z-10">
+                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Ready to take your<br>brand to the next level?</h2>
+                <p class="text-gray-400 max-w-lg mx-auto mb-10">Tell us what you're looking to create and we'll recommend a suitable approach.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="getquote.html" class="bg-white text-black font-bold px-6 py-3 rounded-full hover:bg-gray-200 transition-all">Get a Quote</a>
-                    <a href="consultation.html" class="bg-transparent border border-[#2d3732] text-white font-bold px-6 py-3 rounded-full hover:bg-[#1a1f1c] transition-all">Book a Consultation</a>
+                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-4 rounded-full hover:bg-[#4ade80] transition-all flex items-center justify-center gap-2">Start Your Project</a>
+                    <a href="consultation.html" class="bg-transparent border border-[#333] text-white font-bold px-8 py-4 rounded-full hover:bg-[#111] transition-all">Book a Consultation</a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ (7 Questions) -->
-    <section class="py-20 px-4" id="faq">
-        <div class="max-w-4xl mx-auto w-full">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Questions? <span class="text-[#00d27e]">Answered.</span></h2>
-            </div>
-
-            <div class="flex flex-col gap-4" data-aos="fade-up">
-                <!-- Q1 -->
-                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
-                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
-                        <h3 class="text-lg font-bold text-white">What services does SMARK Studio offer?</h3>
-                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
-                    </div>
-                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">SMARK Studio helps businesses build a professional online presence through websites, promotional flyers, AI-powered videos, and product design (UI/UX).</div>
-                </div>
-
-                <!-- Q2 -->
-                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
-                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
-                        <h3 class="text-lg font-bold text-white">How much do your services cost?</h3>
-                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
-                    </div>
-                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">Pricing depends on the specific scope and package. We offer clear starting prices for our packages. For custom projects, contact us for a tailored quote with no obligation.</div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
-                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
-                        <h3 class="text-lg font-bold text-white">How long does a project take?</h3>
-                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
-                    </div>
-                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">Timelines vary based on the service. Websites typically take 1-4 weeks, while flyers and AI videos can be delivered faster. We provide a clear timeline before starting.</div>
-                </div>
-
-                <!-- Q4 -->
-                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
-                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
-                        <h3 class="text-lg font-bold text-white">Can I combine multiple services?</h3>
-                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
-                    </div>
-                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">Yes! Our "Brand Growth" and "Complete Digital Brand" packages are designed specifically for businesses that want a cohesive online presence across multiple formats.</div>
-                </div>
-
-                <!-- Q5 -->
-                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
-                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
-                        <h3 class="text-lg font-bold text-white">Can you redesign an existing website or design?</h3>
-                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
-                    </div>
-                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">Yes. If your current website or promotional materials feel outdated, we can redesign them with a modern look, better performance, and an improved user experience.</div>
-                </div>
-
-                <!-- Q6 -->
-                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
-                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
-                        <h3 class="text-lg font-bold text-white">How do payments, revisions and delivery work?</h3>
-                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
-                    </div>
-                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">We typically require a deposit to begin. The number of revisions and the final delivery format are agreed upon in the project scope before we start.</div>
-                </div>
-
-                <!-- Q7 -->
-                <div class="faq-item bg-[#131917] border border-[#1a1f1c] rounded-2xl p-6 cursor-pointer hover:border-[#2d3732] transition-colors">
-                    <div class="flex justify-between items-center gap-4" onclick="toggleFaq(this)">
-                        <h3 class="text-lg font-bold text-white">How do I get started?</h3>
-                        <div class="faq-toggle-icon w-8 h-8 rounded-full bg-[#00d27e] text-black flex items-center justify-center text-xl font-bold flex-shrink-0">+</div>
-                    </div>
-                    <div class="faq-answer mt-4 text-gray-400 leading-relaxed">Choose a package or contact us for a quote. We'll discuss your business, goals, and what you need before starting.</div>
-                </div>
-            </div>
-
-            <div class="text-center mt-10" data-aos="fade-up">
-                <p class="text-gray-400 mb-4">Still have a question?</p>
-                <a href="consultation.html" class="inline-block bg-[#00d27e] text-black font-bold px-8 py-3 rounded-full hover:bg-[#4ade80] transition-all">Contact Us</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN CTA -->
-    <section class="py-20 px-4 bg-[#0d1311] border-t border-[#1a1f1c]" id="contact">
-        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Ready to Build a Stronger Online Presence?</h2>
-            <p class="text-gray-400 max-w-lg mx-auto mb-10">Your business already has a story. Let's give it the website, visuals and promotional content to tell it properly.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-4 rounded-full hover:bg-[#4ade80] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.3)]">Build My Online Presence</a>
-                <a href="getquote.html" class="bg-[#131917] border border-[#2d3732] text-white font-bold px-8 py-4 rounded-full hover:bg-[#1a1f1c] transition-all">Get a Quote</a>
-            </div>
-            <div class="mt-10 text-gray-500 text-sm">
-                <span class="block">Email: <a href="mailto:hello@smarkstudio.vercel.app" class="hover:text-[#00d27e] transition-colors">hello@smarkstudio.vercel.app</a></span>
-                <span class="block mt-2">Instagram: <a href="https://instagram.com/smark_studio1" target="_blank" class="hover:text-[#00d27e] transition-colors">@smark_studio1</a></span>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-12 px-4 border-t border-[#1a1f1c] text-sm text-gray-500">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div class="col-span-1 md:col-span-2">
-                <img src="logo.png" alt="SMARK Studio" class="h-10 mb-4">
-                <p class="max-w-xs mb-4">A creative digital studio helping businesses build a professional online presence.</p>
-                <p>Based in Nigeria, Working Worldwide.</p>
+    <footer class="py-12 px-4 border-t border-[#222222]">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-6 h-6 rounded bg-[#00d27e] text-black flex items-center justify-center font-bold text-[10px]">S</div>
+                    <span class="text-white font-bold text-lg tracking-tight">SMARK Studio</span>
+                </div>
+                <p class="text-sm text-gray-500 mb-4">A creative digital studio helping businesses build a stronger online presence.</p>
+                <p class="text-sm text-gray-500">Based in Nigeria, working worldwide.</p>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4">Quick Links</h4>
-                <ul class="space-y-2">
-                    <li><a href="#what-we-do" class="hover:text-[#00d27e]">What We Do</a></li>
-                    <li><a href="#portfolio" class="hover:text-[#00d27e]">Our Work</a></li>
-                    <li><a href="#packages" class="hover:text-[#00d27e]">Packages</a></li>
-                    <li><a href="#about" class="hover:text-[#00d27e]">About</a></li>
+                <h4 class="text-white font-bold mb-4 text-sm">Pages</h4>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#services" class="hover:text-white">Services</a></li>
+                    <li><a href="#portfolio" class="hover:text-white">Portfolio</a></li>
+                    <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
+                    <li><a href="#about" class="hover:text-white">About</a></li>
+                    <li><a href="#faq" class="hover:text-white">FAQ</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4">Services</h4>
-                <ul class="space-y-2">
-                    <li><a href="#what-we-do" class="hover:text-[#00d27e]">Websites</a></li>
-                    <li><a href="#what-we-do" class="hover:text-[#00d27e]">Graphic Design</a></li>
-                    <li><a href="#what-we-do" class="hover:text-[#00d27e]">AI Videos</a></li>
-                    <li><a href="#what-we-do" class="hover:text-[#00d27e]">Product Design</a></li>
+                <h4 class="text-white font-bold mb-4 text-sm">Services</h4>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#services" class="hover:text-white">Website Design & Development</a></li>
+                    <li><a href="#services" class="hover:text-white">Graphic Design</a></li>
+                    <li><a href="#services" class="hover:text-white">AI-Powered Promotional Videos</a></li>
+                    <li><a href="#services" class="hover:text-white">Product Design (UI/UX)</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4 text-sm">Contact</h4>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="mailto:hello@smarkstudio.vercel.app" class="hover:text-white flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg> hello@smarkstudio.vercel.app</a></li>
+                    <li><a href="https://instagram.com/smark_studio1" target="_blank" class="hover:text-white flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" /></svg> @smark_studio1</a></li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-6xl mx-auto border-t border-[#1a1f1c] pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div class="max-w-6xl mx-auto border-t border-[#222222] pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
             <div>&copy; <span id="year"></span> SMARK Studio. All rights reserved.</div>
-            <div class="mt-4 md:mt-0"><a href="#" class="hover:text-[#00d27e]">Privacy Policy</a></div>
+            <div class="mt-4 md:mt-0"><a href="#" class="hover:text-white">Privacy Policy</a></div>
         </div>
     </footer>
 
@@ -558,25 +747,29 @@
         
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // FAQ Logic
+        // FAQ Accordion Logic
         function toggleFaq(element) {
             const item = element.closest('.faq-item');
             const answer = item.querySelector('.faq-answer');
+            const icon = item.querySelector('.faq-toggle-icon');
             const isActive = item.classList.contains('active');
 
             document.querySelectorAll('.faq-item.active').forEach(activeItem => {
                 if(activeItem !== item) {
                     activeItem.classList.remove('active');
                     activeItem.querySelector('.faq-answer').classList.remove('open');
+                    activeItem.querySelector('.faq-toggle-icon').style.transform = 'rotate(0deg)';
                 }
             });
 
             if(!isActive) {
                 item.classList.add('active');
                 answer.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
             } else {
                 item.classList.remove('active');
                 answer.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
             }
         }
 
@@ -587,11 +780,9 @@
 
             // Update Buttons
             buttons.forEach(btn => {
-                btn.classList.remove('active', 'border-[#00d27e]', 'bg-[#00d27e]/10', 'text-[#00d27e]');
-                btn.classList.add('border-[#2d3732]', 'text-gray-400');
+                btn.classList.remove('active');
             });
-            event.target.classList.remove('border-[#2d3732]', 'text-gray-400');
-            event.target.classList.add('active', 'border-[#00d27e]', 'bg-[#00d27e]/10', 'text-[#00d27e]');
+            event.target.classList.add('active');
 
             // Filter Items
             items.forEach(item => {
