@@ -11,8 +11,8 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Base64 SVG Favicon (Works instantly) -->
-    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Base64 SVG Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d27e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23grad)'/%3E%3Ctext x='32' y='44' font-family='Arial, sans-serif' font-weight='bold' font-size='34' fill='%23000000' text-anchor='middle'%3ES'%3C/text%3E%3C/svg%3E">
     
     <script>
         tailwind.config = {
@@ -21,7 +21,26 @@
                     colors: {
                         brand: { dark: '#0B0B0B', card: '#111111', accent: '#00d27e', border: '#222222' }
                     },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 7s ease-in-out 2s infinite',
+                        'float-slow': 'float 8s ease-in-out 1s infinite',
+                        'blob': 'blob 10s infinite alternate',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
                 }
             }
         }
@@ -42,41 +61,46 @@
         .graph-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 3s linear forwards; }
         @keyframes dash { to { stroke-dashoffset: 0; } }
 
-        /* Floating Gradient */
-        .floating-gradient {
+        /* Animated Background Blobs */
+        .bg-blob {
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(0,210,126,0.15) 0%, rgba(11,11,11,0) 70%);
             border-radius: 50%;
-            filter: blur(40px);
-            z-index: -1;
-            animation: floatGradient 10s ease-in-out infinite alternate;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.4;
         }
-        @keyframes floatGradient {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
+        
+        /* Glowing text */
+        .text-glow {
+            text-shadow: 0 0 30px rgba(0, 210, 126, 0.3);
         }
     </style>
 </head>
-<body class="bg-[#0B0B0B] text-gray-300 overflow-x-hidden antialiased selection:bg-[#00d27e] selection:text-black">
+<body class="bg-[#0B0B0B] text-gray-300 overflow-x-hidden antialiased selection:bg-[#00d27e] selection:text-black relative">
+
+    <!-- BACKGROUND BLOBS FOR HERO -->
+    <div class="absolute top-0 left-0 w-full h-[100vh] overflow-hidden pointer-events-none z-0">
+        <div class="bg-blob bg-[#00d27e] w-96 h-96 top-[-10%] left-[-10%] animate-blob"></div>
+        <div class="bg-blob bg-[#00d27e] w-[500px] h-[500px] top-[20%] right-[-10%] animate-blob animation-delay-2000"></div>
+        <div class="bg-blob bg-[#004d2e] w-80 h-80 bottom-0 left-[20%] animate-blob animation-delay-4000"></div>
+    </div>
 
     <!-- NAVBAR -->
     <header class="fixed top-0 left-0 w-full z-50 px-4 py-6 flex justify-center transition-all duration-300">
         <nav class="bg-[#111111]/70 backdrop-blur-xl border border-[#222222] w-full max-w-[1280px] rounded-full px-6 py-3 flex justify-between items-center gap-2 shadow-2xl">
             <a href="#" class="flex items-center gap-2 group shrink-0">
-                <!-- IMAGE LOGO ADDED HERE -->
-                <img src="logo.png" alt="SMARK Studio Logo" class="h-8 md:h-10 w-auto object-contain">
+                <!-- IMAGE LOGO -->
+                <img src="logo.png" alt="SMARK Studio Logo" class="h-8 md:h-10 w-auto object-contain transition-transform group-hover:scale-105">
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-                <a href="#services" class="hover:text-white transition">Services</a>
-                <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
-                <a href="#pricing" class="hover:text-white transition">Pricing</a>
-                <a href="#about" class="hover:text-white transition">About</a>
-                <a href="#faq" class="hover:text-white transition">FAQ</a>
-                <a href="#contact" class="hover:text-white transition">Contact</a>
+                <a href="#services" class="hover:text-[#00d27e] transition">Services</a>
+                <a href="#portfolio" class="hover:text-[#00d27e] transition">Portfolio</a>
+                <a href="#pricing" class="hover:text-[#00d27e] transition">Pricing</a>
+                <a href="#about" class="hover:text-[#00d27e] transition">About</a>
+                <a href="#faq" class="hover:text-[#00d27e] transition">FAQ</a>
+                <a href="#contact" class="hover:text-[#00d27e] transition">Contact</a>
             </div>
-            <a href="consultation.html" class="bg-[#00d27e] text-black text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#4ade80] transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(0,210,126,0.2)] shrink-0">
+            <a href="consultation.html" class="bg-[#00d27e] text-black text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#4ade80] hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.3)] shrink-0">
                 Book a Free Consultation
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
             </a>
@@ -85,20 +109,16 @@
 
     <!-- HERO SECTION -->
     <section class="pt-40 pb-24 px-4 relative min-h-[100dvh] flex items-center overflow-hidden">
-        <!-- Background Gradient -->
-        <div class="floating-gradient top-0 left-0"></div>
-        <div class="floating-gradient bottom-0 right-0 animation-delay-2000"></div>
-
         <div class="max-w-[1280px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center z-10">
             
             <div class="relative z-10" data-aos="fade-right" data-aos-duration="1000">
-                <div class="inline-flex items-center gap-2 bg-[#111111] border border-[#222222] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-6">
+                <div class="inline-flex items-center gap-2 bg-[#111111] border border-[#222222] px-4 py-1.5 rounded-full text-xs text-gray-300 mb-6 hover:border-[#00d27e] transition-colors cursor-default">
                     <span class="w-2 h-2 rounded-full bg-[#00d27e] animate-pulse"></span>
                     Creative Digital Studio
                 </div>
                 <h1 class="text-5xl md:text-7xl font-bold text-white leading-[1.05] mb-6 tracking-tight">
                     Your Brand.<br>
-                    <span class="text-[#00d27e]">Next Level.</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00d27e] to-[#4ade80] text-glow">Next Level.</span>
                 </h1>
                 
                 <p class="text-lg text-gray-400 max-w-md mb-10 leading-relaxed">
@@ -106,11 +126,11 @@
                 </p>
 
                 <div class="flex flex-wrap gap-4 mb-16">
-                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#4ade80] transition-all flex items-center gap-2">
+                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-8 py-3.5 rounded-full hover:bg-[#4ade80] hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.2)]">
                         Start Your Project
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                     </a>
-                    <a href="#portfolio" class="bg-transparent border border-[#333333] text-white font-bold px-8 py-3.5 rounded-full hover:bg-[#111111] transition-all flex items-center gap-2">
+                    <a href="#portfolio" class="bg-transparent border border-[#333333] text-white font-bold px-8 py-3.5 rounded-full hover:bg-[#111111] hover:border-[#00d27e] transition-all flex items-center gap-2">
                         View Our Work
                     </a>
                 </div>
@@ -129,12 +149,12 @@
                 </div>
             </div>
 
-            <!-- High-Fidelity Dashboard Mockup -->
+            <!-- ANIMATED HIGH-FIDELITY DASHBOARD MOCKUP -->
             <div class="relative z-10 w-full flex justify-center lg:justify-end" data-aos="fade-left" data-aos-duration="1000">
                 <div class="relative w-full max-w-[500px]">
                     
                     <!-- Floating Conversion Badge -->
-                    <div class="absolute -top-6 -left-6 bg-[#111111]/90 backdrop-blur-md border border-[#222222] p-4 rounded-2xl flex items-center gap-3 z-20 shadow-2xl">
+                    <div class="absolute -top-8 -left-8 bg-[#111111]/90 backdrop-blur-md border border-[#222222] p-4 rounded-2xl flex items-center gap-3 z-30 shadow-2xl animate-float-delayed">
                         <div class="w-10 h-10 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.306a11.95 11.95 0 015.814-5.518l2.74-1.22m0 0l-5.94-2.281m5.94 2.28l-2.28 5.941" /></svg>
                         </div>
@@ -143,9 +163,20 @@
                             <div class="text-[#00d27e] font-bold text-lg">+147%</div>
                         </div>
                     </div>
+
+                    <!-- Floating New Lead Badge -->
+                    <div class="absolute top-1/2 -right-12 bg-[#111111]/90 backdrop-blur-md border border-[#222222] p-4 rounded-2xl flex items-center gap-3 z-30 shadow-2xl animate-float hidden lg:flex">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+                        </div>
+                        <div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">New Lead</div>
+                            <div class="text-white font-bold text-sm">Just now</div>
+                        </div>
+                    </div>
                     
-                    <!-- Browser Window -->
-                    <div class="bg-[#111111] border border-[#222222] rounded-2xl overflow-hidden shadow-2xl">
+                    <!-- Main Browser Window (Floating) -->
+                    <div class="bg-[#111111] border border-[#222222] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-float-slow relative z-20">
                         <!-- Browser Header -->
                         <div class="flex items-center gap-2 px-4 py-3 border-b border-[#222222] bg-[#0B0B0B]">
                             <div class="flex gap-1.5">
@@ -162,17 +193,17 @@
                         <div class="p-5">
                             <!-- Top Stats -->
                             <div class="grid grid-cols-3 gap-3 mb-4">
-                                <div class="bg-[#0B0B0B] border border-[#222222] p-3 rounded-xl">
+                                <div class="bg-[#0B0B0B] border border-[#222222] p-3 rounded-xl hover:border-[#00d27e] transition">
                                     <div class="text-[10px] text-gray-500 mb-1">Revenue</div>
                                     <div class="text-white font-bold text-sm">$48.2k</div>
                                     <div class="text-[#00d27e] text-[10px]">+12%</div>
                                 </div>
-                                <div class="bg-[#0B0B0B] border border-[#222222] p-3 rounded-xl">
+                                <div class="bg-[#0B0B0B] border border-[#222222] p-3 rounded-xl hover:border-[#00d27e] transition">
                                     <div class="text-[10px] text-gray-500 mb-1">Visitors</div>
                                     <div class="text-white font-bold text-sm">24.1k</div>
                                     <div class="text-[#00d27e] text-[10px]">+38%</div>
                                 </div>
-                                <div class="bg-[#0B0B0B] border border-[#222222] p-3 rounded-xl">
+                                <div class="bg-[#0B0B0B] border border-[#222222] p-3 rounded-xl hover:border-[#00d27e] transition">
                                     <div class="text-[10px] text-gray-500 mb-1">Bounce</div>
                                     <div class="text-white font-bold text-sm">1.8%</div>
                                     <div class="text-red-400 text-[10px]">-22%</div>
@@ -197,7 +228,7 @@
                     </div>
                     
                     <!-- Floating Lighthouse Badge -->
-                    <div class="absolute -bottom-6 -right-6 bg-[#111111]/90 backdrop-blur-md border border-[#222222] p-4 rounded-2xl flex flex-col items-center justify-center z-20 shadow-2xl w-28">
+                    <div class="absolute -bottom-8 -right-4 bg-[#111111]/90 backdrop-blur-md border border-[#222222] p-4 rounded-2xl flex flex-col items-center justify-center z-30 shadow-2xl w-28 animate-float">
                         <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Lighthouse</div>
                         <div class="text-[#00d27e] font-bold text-xl">100/100</div>
                     </div>
@@ -207,37 +238,37 @@
     </section>
 
     <!-- TRUST SECTION -->
-    <section class="py-12 border-y border-[#222222] bg-[#0B0B0B]">
+    <section class="py-12 border-y border-[#222222] bg-[#0B0B0B] relative z-10">
         <div class="max-w-[1280px] mx-auto px-4 text-center">
             <div class="text-gray-600 text-xs uppercase tracking-widest font-semibold mb-8" data-aos="fade-up">Trusted by startups, local businesses, and growing brands</div>
             <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-40 text-lg font-bold text-white" data-aos="fade-up" data-aos-delay="100">
-                <span>Finora</span>
-                <span>Atlas Labs</span>
-                <span>Brightleaf</span>
-                <span>Oakhouse</span>
-                <span>Pulsegrid</span>
-                <span>Northwind</span>
+                <span class="hover:text-[#00d27e] hover:opacity-100 transition cursor-default">Finora</span>
+                <span class="hover:text-[#00d27e] hover:opacity-100 transition cursor-default">Atlas Labs</span>
+                <span class="hover:text-[#00d27e] hover:opacity-100 transition cursor-default">Brightleaf</span>
+                <span class="hover:text-[#00d27e] hover:opacity-100 transition cursor-default">Oakhouse</span>
+                <span class="hover:text-[#00d27e] hover:opacity-100 transition cursor-default">Pulsegrid</span>
+                <span class="hover:text-[#00d27e] hover:opacity-100 transition cursor-default">Northwind</span>
             </div>
         </div>
     </section>
 
     <!-- STATS SECTION -->
-    <section class="py-20 px-4">
+    <section class="py-20 px-4 relative z-10">
         <div class="max-w-[1280px] mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4" data-aos="fade-up">
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
                     <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">200<span class="text-[#00d27e]">+</span></h3>
                     <p class="text-sm text-gray-500">Projects Delivered</p>
                 </div>
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
                     <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">98<span class="text-[#00d27e]">%</span></h3>
                     <p class="text-sm text-gray-500">Client Satisfaction</p>
                 </div>
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
                     <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">24<span class="text-[#00d27e]">/7</span></h3>
                     <p class="text-sm text-gray-500">Support Coverage</p>
                 </div>
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
                     <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">5<span class="text-[#00d27e]">★</span></h3>
                     <p class="text-sm text-gray-500">Average Rating</p>
                 </div>
@@ -246,7 +277,7 @@
     </section>
 
     <!-- SERVICES SECTION -->
-    <section class="py-24 px-4 border-t border-[#222222]" id="services">
+    <section class="py-24 px-4 border-t border-[#222222] relative z-10" id="services">
         <div class="max-w-[1280px] mx-auto">
             <div class="mb-16" data-aos="fade-up">
                 <p class="text-xs font-bold text-[#00d27e] uppercase tracking-widest mb-3">01 — What We Do</p>
@@ -255,41 +286,41 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Service 1 -->
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e]/50 transition-colors duration-300" data-aos="fade-up" data-aos-delay="0">
-                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e] hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6 group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Website Design & Development</h3>
+                    <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-[#00d27e] transition-colors">Website Design & Development</h3>
                     <p class="text-gray-400 text-sm mb-6 max-w-sm">Custom, responsive websites designed around your goals, audience and needs.</p>
                     <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
                 </div>
 
                 <!-- Service 2 -->
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e]/50 transition-colors duration-300" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e] hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6 group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Graphic Design</h3>
+                    <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-[#00d27e] transition-colors">Graphic Design</h3>
                     <p class="text-gray-400 text-sm mb-6 max-w-sm">Visual content that helps you communicate professionally and promote what you sell.</p>
                     <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
                 </div>
 
                 <!-- Service 3 -->
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e]/50 transition-colors duration-300" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e] hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6 group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" /></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">AI Promotional Videos</h3>
+                    <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-[#00d27e] transition-colors">AI Promotional Videos</h3>
                     <p class="text-gray-400 text-sm mb-6 max-w-sm">Promotional videos produced with suitable AI-assisted tools and editing workflows.</p>
                     <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
                 </div>
 
                 <!-- Service 4 -->
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e]/50 transition-colors duration-300" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6">
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl hover:border-[#00d27e] hover:-translate-y-2 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 rounded-xl bg-[#00d27e]/10 flex items-center justify-center text-[#00d27e] mb-6 group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Product Design (UI/UX)</h3>
+                    <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-[#00d27e] transition-colors">Product Design (UI/UX)</h3>
                     <p class="text-gray-400 text-sm mb-6 max-w-sm">Interface and experience design for digital products. Design only — app development is not included unless separately agreed.</p>
                     <a href="consultation.html" class="inline-flex items-center gap-2 text-[#00d27e] text-sm font-semibold hover:underline">Request a quote →</a>
                 </div>
@@ -298,7 +329,7 @@
     </section>
 
     <!-- PROCESS SECTION -->
-    <section class="py-24 px-4 border-t border-[#222222]">
+    <section class="py-24 px-4 border-t border-[#222222] relative z-10">
         <div class="max-w-[1280px] mx-auto">
             <div class="mb-16" data-aos="fade-up">
                 <p class="text-xs font-bold text-[#00d27e] uppercase tracking-widest mb-3">02 — How We Work</p>
@@ -306,31 +337,33 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-5 gap-6 relative" data-aos="fade-up">
-                <!-- Connecting Line -->
-                <div class="hidden md:block absolute top-6 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#00d27e]/50 to-transparent z-0"></div>
+                <!-- Connecting Line with Pulse -->
+                <div class="hidden md:block absolute top-6 left-[10%] right-[10%] h-px bg-[#222] z-0">
+                    <div class="h-full bg-gradient-to-r from-transparent via-[#00d27e] to-transparent animate-pulse-slow w-full"></div>
+                </div>
                 
                 <div class="relative z-10">
-                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.1)]">1</div>
+                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.2)] hover:scale-110 transition-transform cursor-default">1</div>
                     <h4 class="text-white font-bold mb-2">Discovery</h4>
                     <p class="text-sm text-gray-500">Goals, audience, and the metric we're moving.</p>
                 </div>
                 <div class="relative z-10">
-                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.1)]">2</div>
+                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.2)] hover:scale-110 transition-transform cursor-default">2</div>
                     <h4 class="text-white font-bold mb-2">Design</h4>
                     <p class="text-sm text-gray-500">Art direction, layout systems, interactive prototype.</p>
                 </div>
                 <div class="relative z-10">
-                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.1)]">3</div>
+                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.2)] hover:scale-110 transition-transform cursor-default">3</div>
                     <h4 class="text-white font-bold mb-2">Development</h4>
                     <p class="text-sm text-gray-500">Clean, component-driven build with real content.</p>
                 </div>
                 <div class="relative z-10">
-                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.1)]">4</div>
+                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.2)] hover:scale-110 transition-transform cursor-default">4</div>
                     <h4 class="text-white font-bold mb-2">Testing</h4>
                     <p class="text-sm text-gray-500">Performance, accessibility, cross-device QA.</p>
                 </div>
                 <div class="relative z-10">
-                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.1)]">5</div>
+                    <div class="w-12 h-12 rounded-full bg-[#0B0B0B] border border-[#333] flex items-center justify-center text-[#00d27e] font-bold mb-4 shadow-[0_0_15px_rgba(0,210,126,0.2)] hover:scale-110 transition-transform cursor-default">5</div>
                     <h4 class="text-white font-bold mb-2">Launch</h4>
                     <p class="text-sm text-gray-500">Deploy, measure, iterate on what the data says.</p>
                 </div>
@@ -339,7 +372,7 @@
     </section>
 
     <!-- PORTFOLIO SECTION -->
-    <section class="py-24 px-4 border-t border-[#222222]" id="portfolio">
+    <section class="py-24 px-4 border-t border-[#222222] relative z-10" id="portfolio">
         <div class="max-w-[1280px] mx-auto">
             <div class="mb-10" data-aos="fade-up">
                 <p class="text-xs font-bold text-[#00d27e] uppercase tracking-widest mb-3">03 — Portfolio</p>
@@ -359,7 +392,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="portfolio-grid">
                 
                 <!-- Project 1 -->
-                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#333] transition" data-category="websites" data-aos="fade-up">
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#00d27e] transition-colors" data-category="websites" data-aos="fade-up">
                     <div class="h-72 bg-[#0B0B0B] relative overflow-hidden">
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div class="w-[85%] h-[85%] border border-[#222] rounded-xl p-6 transform group-hover:scale-105 transition-transform duration-500 bg-[#111]">
@@ -371,7 +404,7 @@
                     </div>
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-2xl font-bold text-white">Finora Dashboard</h3>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-[#00d27e] transition-colors">Finora Dashboard</h3>
                             <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-3 py-1.5 rounded-full border border-[#00d27e]/20">Web Platform</span>
                         </div>
                         <p class="text-gray-400 mb-6">Financial infrastructure for the next generation of companies.</p>
@@ -380,7 +413,7 @@
                 </div>
 
                 <!-- Project 2 -->
-                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#333] transition" data-category="websites" data-aos="fade-up">
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#00d27e] transition-colors" data-category="websites" data-aos="fade-up">
                     <div class="h-72 bg-[#0B0B0B] relative overflow-hidden">
                          <div class="absolute inset-0 flex items-center justify-center">
                             <div class="w-[85%] h-[85%] border border-[#222] rounded-xl p-6 transform group-hover:scale-105 transition-transform duration-500 bg-[#111] flex flex-col items-center justify-center">
@@ -391,7 +424,7 @@
                     </div>
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-2xl font-bold text-white">Veridian Watches</h3>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-[#00d27e] transition-colors">Veridian Watches</h3>
                             <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-3 py-1.5 rounded-full border border-[#00d27e]/20">E-commerce</span>
                         </div>
                         <p class="text-gray-400 mb-6">Premium product landing page and brand identity.</p>
@@ -400,16 +433,16 @@
                 </div>
 
                 <!-- Project 3 -->
-                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#333] transition" data-category="graphic" data-aos="fade-up">
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#00d27e] transition-colors" data-category="graphic" data-aos="fade-up">
                     <div class="h-72 bg-[#0B0B0B] relative overflow-hidden flex items-center justify-center">
-                        <div class="w-40 h-56 bg-gradient-to-br from-[#00d27e] to-[#004d2e] rounded-xl shadow-2xl transform rotate-3 group-hover:rotate-0 transition-transform duration-500 flex flex-col items-center justify-center text-black p-6 text-center">
+                        <div class="w-40 h-56 bg-gradient-to-br from-[#00d27e] to-[#004d2e] rounded-xl shadow-2xl transform rotate-3 group-hover:rotate-0 group-hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-black p-6 text-center">
                             <div class="font-bold text-2xl leading-tight mb-2">SUMMER<br>SALE</div>
                             <div class="text-sm font-medium opacity-80 border-t border-black/20 pt-2 mt-2 w-full">50% OFF</div>
                         </div>
                     </div>
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-2xl font-bold text-white">Promo Flyer Concept</h3>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-[#00d27e] transition-colors">Promo Flyer Concept</h3>
                             <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-3 py-1.5 rounded-full border border-[#00d27e]/20">Graphic Design</span>
                         </div>
                         <p class="text-gray-400 mb-6">Social media promotional graphic design.</p>
@@ -418,7 +451,7 @@
                 </div>
 
                 <!-- Project 4 -->
-                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#333] transition" data-category="videos" data-aos="fade-up">
+                <div class="portfolio-item bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden group hover:border-[#00d27e] transition-colors" data-category="videos" data-aos="fade-up">
                     <div class="h-72 bg-[#0B0B0B] relative overflow-hidden flex items-center justify-center">
                         <div class="w-20 h-20 rounded-full bg-[#00d27e]/20 border border-[#00d27e]/40 flex items-center justify-center text-[#00d27e] group-hover:scale-110 transition-transform cursor-pointer shadow-[0_0_30px_rgba(0,210,126,0.2)]">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" /></svg>
@@ -426,7 +459,7 @@
                     </div>
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-2xl font-bold text-white">AI Promo Video</h3>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-[#00d27e] transition-colors">AI Promo Video</h3>
                             <span class="text-xs bg-[#00d27e]/10 text-[#00d27e] px-3 py-1.5 rounded-full border border-[#00d27e]/20">AI Video</span>
                         </div>
                         <p class="text-gray-400 mb-6">Cinematic 15-second social media advertisement.</p>
@@ -439,41 +472,41 @@
     </section>
 
     <!-- WHY CHOOSE US -->
-    <section class="py-24 px-4 border-t border-[#222222]" id="about">
+    <section class="py-24 px-4 border-t border-[#222222] relative z-10" id="about">
         <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <!-- Left Visual -->
-            <div class="relative h-[450px] bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden flex items-center justify-center" data-aos="fade-right">
-                <div class="absolute inset-0 bg-gradient-to-br from-[#00d27e]/20 via-transparent to-transparent blur-3xl"></div>
-                <div class="relative z-10 w-64 h-40 bg-[#0B0B0B] border border-[#333] rounded-xl transform rotate-6 shadow-[0_0_60px_rgba(0,210,126,0.15)]"></div>
-                <div class="absolute z-0 w-48 h-48 border border-[#00d27e]/30 rounded-full animate-pulse"></div>
+            <div class="relative h-[450px] bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden flex items-center justify-center group" data-aos="fade-right">
+                <div class="absolute inset-0 bg-gradient-to-br from-[#00d27e]/20 via-transparent to-transparent blur-3xl group-hover:opacity-100 opacity-50 transition-opacity"></div>
+                <div class="relative z-10 w-64 h-40 bg-[#0B0B0B] border border-[#333] rounded-xl transform rotate-6 group-hover:rotate-0 transition-transform duration-700 shadow-[0_0_60px_rgba(0,210,126,0.15)]"></div>
+                <div class="absolute z-0 w-48 h-48 border border-[#00d27e]/30 rounded-full animate-ping group-hover:animate-pulse"></div>
             </div>
             
             <!-- Right Content -->
             <div data-aos="fade-left">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Why Businesses Choose SMARK</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-                    <div>
-                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Fast Delivery</h4>
+                    <div class="group cursor-default">
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1 group-hover:text-[#00d27e] transition"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Fast Delivery</h4>
                         <p class="text-sm text-gray-500">We meet deadlines without compromising quality.</p>
                     </div>
-                    <div>
-                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Responsive Design</h4>
+                    <div class="group cursor-default">
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1 group-hover:text-[#00d27e] transition"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Responsive Design</h4>
                         <p class="text-sm text-gray-500">Looks perfect on every screen size.</p>
                     </div>
-                    <div>
-                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> SEO Ready</h4>
+                    <div class="group cursor-default">
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1 group-hover:text-[#00d27e] transition"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> SEO Ready</h4>
                         <p class="text-sm text-gray-500">Built with best practices to help you rank.</p>
                     </div>
-                    <div>
-                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Modern UI</h4>
+                    <div class="group cursor-default">
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1 group-hover:text-[#00d27e] transition"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Modern UI</h4>
                         <p class="text-sm text-gray-500">Sleek, intuitive, and conversion-focused.</p>
                     </div>
-                    <div>
-                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Clean Code</h4>
+                    <div class="group cursor-default">
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1 group-hover:text-[#00d27e] transition"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Clean Code</h4>
                         <p class="text-sm text-gray-500">Secure, scalable, and easy to maintain.</p>
                     </div>
-                    <div>
-                        <h4 class="flex items-center gap-2 text-white font-bold mb-1"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Secure & Scalable</h4>
+                    <div class="group cursor-default">
+                        <h4 class="flex items-center gap-2 text-white font-bold mb-1 group-hover:text-[#00d27e] transition"><svg class="w-5 h-5 text-[#00d27e]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Secure & Scalable</h4>
                         <p class="text-sm text-gray-500">Ready to grow with your business.</p>
                     </div>
                 </div>
@@ -482,7 +515,7 @@
     </section>
 
     <!-- TESTIMONIALS -->
-    <section class="py-24 px-4 border-t border-[#222222]">
+    <section class="py-24 px-4 border-t border-[#222222] relative z-10">
         <div class="max-w-[1280px] mx-auto">
             <div class="flex justify-between items-end mb-12" data-aos="fade-up">
                 <div>
@@ -490,19 +523,19 @@
                     <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">Words from the<br>people who paid.</h2>
                 </div>
                 <div class="hidden md:flex gap-3">
-                    <button class="w-12 h-12 rounded-full border border-[#333] flex items-center justify-center text-gray-400 hover:text-white hover:border-[#00d27e] transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg></button>
-                    <button class="w-12 h-12 rounded-full border border-[#333] flex items-center justify-center text-gray-400 hover:text-white hover:border-[#00d27e] transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></button>
+                    <button class="w-12 h-12 rounded-full border border-[#333] flex items-center justify-center text-gray-400 hover:text-white hover:border-[#00d27e] transition hover:scale-105"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg></button>
+                    <button class="w-12 h-12 rounded-full border border-[#333] flex items-center justify-center text-gray-400 hover:text-white hover:border-[#00d27e] transition hover:scale-105"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></button>
                 </div>
             </div>
             
-            <div class="bg-gradient-to-br from-[#111111] to-[#0B0B0B] border border-[#222222] p-10 md:p-16 rounded-3xl relative overflow-hidden" data-aos="fade-up">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-[#00d27e]/5 rounded-full blur-3xl"></div>
+            <div class="bg-gradient-to-br from-[#111111] to-[#0B0B0B] border border-[#222222] p-10 md:p-16 rounded-3xl relative overflow-hidden group hover:border-[#00d27e] transition-colors" data-aos="fade-up">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-[#00d27e]/10 rounded-full blur-3xl group-hover:bg-[#00d27e]/20 transition-all duration-700"></div>
                 <div class="flex text-[#00d27e] text-xl mb-8">★★★★★</div>
                 <blockquote class="text-2xl md:text-4xl text-white font-medium leading-tight mb-12 max-w-4xl relative z-10">
                     “Every handoff was clean, every deadline was met, and the site scores 100 on performance. Rare combination.”
                 </blockquote>
                 <div class="flex items-center gap-4 relative z-10">
-                    <div class="w-14 h-14 rounded-full bg-[#00d27e]/20 border border-[#00d27e]/30 flex items-center justify-center text-[#00d27e] font-bold text-lg">DR</div>
+                    <div class="w-14 h-14 rounded-full bg-[#00d27e]/20 border border-[#00d27e]/30 flex items-center justify-center text-[#00d27e] font-bold text-lg group-hover:scale-110 transition-transform">DR</div>
                     <div>
                         <div class="text-white font-bold text-lg">Daniel Reyes</div>
                         <div class="text-sm text-gray-500">Head of Growth, Finora</div>
@@ -512,8 +545,8 @@
         </div>
     </section>
 
-    <!-- PACKAGES SECTION (EXACT PRICING REQUESTED) -->
-    <section class="py-24 px-4 border-t border-[#222222]" id="pricing">
+    <!-- PACKAGES SECTION -->
+    <section class="py-24 px-4 border-t border-[#222222] relative z-10" id="pricing">
         <div class="max-w-[1280px] mx-auto">
             <div class="mb-12" data-aos="fade-up">
                 <p class="text-xs font-bold text-[#00d27e] uppercase tracking-widest mb-3">06 — Packages</p>
@@ -524,8 +557,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up">
                 
                 <!-- Package 1 -->
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl flex flex-col hover:border-[#00d27e]/30 transition group">
-                    <h3 class="text-xl font-bold text-white mb-2">Brand Starter</h3>
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl flex flex-col hover:border-[#00d27e] hover:-translate-y-2 transition-all duration-300 group">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#00d27e] transition-colors">Brand Starter</h3>
                     <p class="text-xs text-gray-500 mb-6 h-10">For businesses that need to look more professional.</p>
                     <div class="text-3xl font-bold text-white mb-8">₦7,000</div>
                     <ul class="text-sm text-gray-400 space-y-4 mb-10 flex-grow">
@@ -537,8 +570,8 @@
                 </div>
 
                 <!-- Package 2 -->
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl flex flex-col hover:border-[#00d27e]/30 transition group">
-                    <h3 class="text-xl font-bold text-white mb-2">Digital Starter</h3>
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl flex flex-col hover:border-[#00d27e] hover:-translate-y-2 transition-all duration-300 group">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#00d27e] transition-colors">Digital Starter</h3>
                     <p class="text-xs text-gray-500 mb-6 h-10">For businesses that need a simple online presence.</p>
                     <div class="text-3xl font-bold text-white mb-8">₦30,000</div>
                     <ul class="text-sm text-gray-400 space-y-4 mb-10 flex-grow">
@@ -551,8 +584,8 @@
                 </div>
 
                 <!-- Package 3 (Recommended) -->
-                <div class="bg-[#111111] border-2 border-[#00d27e] p-8 rounded-3xl flex flex-col relative transform md:-translate-y-2 shadow-[0_0_40px_rgba(0,210,126,0.15)] group">
-                    <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#00d27e] text-black text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">Suggested Launch</span>
+                <div class="bg-[#111111] border-2 border-[#00d27e] p-8 rounded-3xl flex flex-col relative transform md:-translate-y-2 shadow-[0_0_40px_rgba(0,210,126,0.15)] hover:shadow-[0_0_60px_rgba(0,210,126,0.3)] transition-all duration-300 group">
+                    <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#00d27e] text-black text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg animate-pulse">Suggested Launch</span>
                     <h3 class="text-xl font-bold text-white mb-2">Brand Booster</h3>
                     <p class="text-xs text-gray-500 mb-6 h-10">Everything you need to launch your brand online.</p>
                     <div class="text-3xl font-bold text-white mb-8">₦40,000</div>
@@ -562,12 +595,12 @@
                         <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> One short AI promotional video</li>
                         <li class="flex items-start gap-3"><svg class="w-5 h-5 text-[#00d27e] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Agreed revision limits</li>
                     </ul>
-                    <a href="getquote.html" class="block w-full py-3.5 rounded-xl bg-[#00d27e] text-center text-sm font-bold text-black hover:bg-[#4ade80] transition-all shadow-[0_0_15px_rgba(0,210,126,0.3)]">Get Started</a>
+                    <a href="getquote.html" class="block w-full py-3.5 rounded-xl bg-[#00d27e] text-center text-sm font-bold text-black hover:bg-[#4ade80] transition-all shadow-[0_0_15px_rgba(0,210,126,0.3)] hover:scale-105">Get Started</a>
                 </div>
 
                 <!-- Package 4 -->
-                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl flex flex-col hover:border-[#00d27e]/30 transition group">
-                    <h3 class="text-xl font-bold text-white mb-2">Complete Starter Brand</h3>
+                <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl flex flex-col hover:border-[#00d27e] hover:-translate-y-2 transition-all duration-300 group">
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#00d27e] transition-colors">Complete Starter Brand</h3>
                     <p class="text-xs text-gray-500 mb-6 h-10">For businesses that want several essentials together.</p>
                     <div class="text-3xl font-bold text-white mb-8">₦55,000</div>
                     <ul class="text-sm text-gray-400 space-y-4 mb-10 flex-grow">
@@ -583,13 +616,13 @@
     </section>
 
     <!-- FAQ SECTION -->
-    <section class="py-24 px-4 border-t border-[#222222]" id="faq">
+    <section class="py-24 px-4 border-t border-[#222222] relative z-10" id="faq">
         <div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
             
             <div class="md:col-span-1" data-aos="fade-right">
                 <p class="text-xs font-bold text-[#00d27e] uppercase tracking-widest mb-3">07 — FAQ</p>
                 <h2 class="text-4xl font-bold text-white mb-4">Common<br>questions.</h2>
-                <p class="text-sm text-gray-500 mb-6">Still have a question? <a href="consultation.html" class="text-[#00d27e] hover:underline">Contact us.</a></p>
+                <p class="text-sm text-gray-500 mb-6">Still have a question? <a href="consultation.html" class="text-[#00d27e] hover:underline transition">Contact us.</a></p>
             </div>
 
             <div class="md:col-span-2" data-aos="fade-left">
@@ -655,34 +688,32 @@
     </section>
 
     <!-- FINAL CTA SECTION -->
-    <section class="py-24 px-4" id="contact">
-        <div class="max-w-[1280px] mx-auto bg-gradient-to-br from-[#0a2e1f] via-[#0B0B0B] to-[#0B0B0B] border border-[#00d27e]/30 rounded-[2.5rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl" data-aos="fade-up">
-            <div class="absolute inset-0 bg-[#00d27e]/10 blur-[100px] rounded-full"></div>
+    <section class="py-24 px-4 relative z-10" id="contact">
+        <div class="max-w-[1280px] mx-auto bg-gradient-to-br from-[#0a2e1f] via-[#0B0B0B] to-[#0B0B0B] border border-[#00d27e]/30 rounded-[2.5rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl group" data-aos="fade-up">
+            <div class="absolute inset-0 bg-[#00d27e]/10 blur-[100px] rounded-full group-hover:bg-[#00d27e]/20 transition-all duration-1000"></div>
             <div class="relative z-10">
-                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">Ready to Build<br>Something Amazing?</h2>
+                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight group-hover:scale-105 transition-transform duration-500">Ready to Build<br>Something Amazing?</h2>
                 <p class="text-gray-400 max-w-lg mx-auto mb-10 text-lg">Tell us what you're looking to create and we'll recommend a suitable approach.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-10 py-4 rounded-full hover:bg-[#4ade80] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.4)]">Let's Talk</a>
-                    <a href="getquote.html" class="bg-transparent border border-[#333] text-white font-bold px-10 py-4 rounded-full hover:bg-[#111] transition-all">Get a Quote</a>
+                    <a href="consultation.html" class="bg-[#00d27e] text-black font-bold px-10 py-4 rounded-full hover:bg-[#4ade80] hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,210,126,0.4)]">Let's Talk</a>
+                    <a href="getquote.html" class="bg-transparent border border-[#333] text-white font-bold px-10 py-4 rounded-full hover:bg-[#111] hover:border-[#00d27e] transition-all">Get a Quote</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-16 px-4 border-t border-[#222222] bg-[#0B0B0B]">
+    <footer class="py-16 px-4 border-t border-[#222222] bg-[#0B0B0B] relative z-10">
         <div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
-                    <!-- IMAGE LOGO ADDED HERE IN FOOTER TOO -->
                     <img src="logo.png" alt="SMARK Studio Logo" class="h-8 md:h-10 w-auto object-contain">
                 </div>
                 <p class="text-sm text-gray-500 mb-6 max-w-sm">A creative digital studio helping businesses build a stronger online presence.</p>
                 
-                <!-- Newsletter Input -->
-                <div class="flex items-center bg-[#111111] border border-[#222222] rounded-full p-1 max-w-sm">
+                <div class="flex items-center bg-[#111111] border border-[#222222] rounded-full p-1 max-w-sm focus-within:border-[#00d27e] transition-colors">
                     <input type="email" placeholder="Enter your email" class="bg-transparent border-none text-sm text-white px-4 py-2 w-full focus:outline-none">
-                    <button class="bg-[#00d27e] text-black text-sm font-bold px-6 py-2 rounded-full hover:bg-[#4ade80] transition">Subscribe</button>
+                    <button class="bg-[#00d27e] text-black text-sm font-bold px-6 py-2 rounded-full hover:bg-[#4ade80] transition hover:scale-105">Subscribe</button>
                 </div>
             </div>
             <div>
@@ -711,21 +742,21 @@
                     <li><a href="https://instagram.com/smark_studio1" target="_blank" class="hover:text-[#00d27e] transition flex items-center gap-2">@smark_studio1</a></li>
                 </ul>
                 <div class="flex gap-4 mt-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-white hover:scale-110 transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-white hover:scale-110 transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-white hover:scale-110 transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
                 </div>
             </div>
         </div>
         <div class="max-w-[1280px] mx-auto border-t border-[#222222] pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
             <div>&copy; <span id="year"></span> SMARK Studio. All rights reserved.</div>
-            <div class="mt-4 md:mt-0 flex gap-4"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms of Service</a></div>
+            <div class="mt-4 md:mt-0 flex gap-4"><a href="#" class="hover:text-white transition">Privacy Policy</a><a href="#" class="hover:text-white transition">Terms of Service</a></div>
         </div>
     </footer>
 
     <!-- WHATSAPP FLOATING BUTTON -->
     <a href="https://wa.me/2347086509637?text=Hi%20SMARK%20Studio!" class="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-6 z-50 group animate-pulse" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp">
-      <div class="relative flex items-center justify-center w-14 h-14 bg-[#075e54] rounded-full shadow-lg ring-4 ring-[#075e54]/20 hover:ring-[#075e54]/40 transition-all duration-300 group-hover:scale-105">
+      <div class="relative flex items-center justify-center w-14 h-14 bg-[#075e54] rounded-full shadow-lg ring-4 ring-[#075e54]/20 hover:ring-[#075e54]/40 transition-all duration-300 group-hover:scale-110">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="#ffffff"/></svg>
       </div>
     </a>
