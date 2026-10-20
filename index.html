@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMARK Studio - Creative Digital Studio</title>
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- AOS CSS -->
@@ -11,8 +12,8 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Base64 SVG Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d27e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%234ade80;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23grad)'/%3E%3Ctext x='32' y='44' font-family='Arial, sans-serif' font-weight='bold' font-size='34' fill='%23000000' text-anchor='middle'%3ES'%3C/text%3E%3C/svg%3E">
+    <!-- RESTORED FAVICON TO PNG (Increase size via browser cache refresh) -->
+    <link rel="icon" type="image/png" href="logo.png">
     
     <script>
         tailwind.config = {
@@ -26,8 +27,8 @@
                         'float': 'float 6s ease-in-out infinite',
                         'float-delayed': 'float 7s ease-in-out 2s infinite',
                         'float-slow': 'float 8s ease-in-out 1s infinite',
-                        'blob': 'blob 10s infinite alternate',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blob': 'blob 15s infinite alternate',
+                        'pulse-dim': 'pulseDim 4s ease-in-out infinite',
                     },
                     keyframes: {
                         float: {
@@ -36,9 +37,12 @@
                         },
                         blob: {
                             '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '50%': { transform: 'translate(30px, -50px) scale(1.05)' },
+                            '100%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+                        },
+                        pulseDim: {
+                            '0%, 100%': { opacity: 0.15 },
+                            '50%': { opacity: 0.3 },
                         }
                     }
                 }
@@ -65,24 +69,20 @@
         .bg-blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(100px); /* Softer blur */
             z-index: 0;
-            opacity: 0.4;
-        }
-        
-        /* Glowing text */
-        .text-glow {
-            text-shadow: 0 0 30px rgba(0, 210, 126, 0.3);
+            transition: transform 0.2s ease-out; /* Smooth mouse follow */
+            will-change: transform;
         }
     </style>
 </head>
 <body class="bg-[#0B0B0B] text-gray-300 overflow-x-hidden antialiased selection:bg-[#00d27e] selection:text-black relative">
 
-    <!-- BACKGROUND BLOBS FOR HERO -->
-    <div class="absolute top-0 left-0 w-full h-[100vh] overflow-hidden pointer-events-none z-0">
-        <div class="bg-blob bg-[#00d27e] w-96 h-96 top-[-10%] left-[-10%] animate-blob"></div>
-        <div class="bg-blob bg-[#00d27e] w-[500px] h-[500px] top-[20%] right-[-10%] animate-blob animation-delay-2000"></div>
-        <div class="bg-blob bg-[#004d2e] w-80 h-80 bottom-0 left-[20%] animate-blob animation-delay-4000"></div>
+    <!-- BACKGROUND GLOWS (Dimmed & Mouse Reactive) -->
+    <div class="absolute top-0 left-0 w-full h-[100vh] overflow-hidden pointer-events-none z-0" id="hero-bg">
+        <div class="bg-blob bg-[#00d27e] w-[400px] h-[400px] top-[-10%] left-[-10%] animate-blob animate-pulse-dim" data-speed="2"></div>
+        <div class="bg-blob bg-[#00d27e] w-[600px] h-[600px] top-[20%] right-[-10%] animate-blob animation-delay-2000 animate-pulse-dim" data-speed="3"></div>
+        <div class="bg-blob bg-[#004d2e] w-[350px] h-[350px] bottom-0 left-[20%] animate-blob animation-delay-4000 animate-pulse-dim" data-speed="1.5"></div>
     </div>
 
     <!-- NAVBAR -->
@@ -118,7 +118,7 @@
                 </div>
                 <h1 class="text-5xl md:text-7xl font-bold text-white leading-[1.05] mb-6 tracking-tight">
                     Your Brand.<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00d27e] to-[#4ade80] text-glow">Next Level.</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00d27e] to-[#4ade80]">Next Level.</span>
                 </h1>
                 
                 <p class="text-lg text-gray-400 max-w-md mb-10 leading-relaxed">
@@ -252,24 +252,24 @@
         </div>
     </section>
 
-    <!-- STATS SECTION -->
+    <!-- STATS SECTION (Counting Numbers) -->
     <section class="py-20 px-4 relative z-10">
         <div class="max-w-[1280px] mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4" data-aos="fade-up">
                 <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
-                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">200<span class="text-[#00d27e]">+</span></h3>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2"><span class="counter" data-target="200">0</span><span class="text-[#00d27e]">+</span></h3>
                     <p class="text-sm text-gray-500">Projects Delivered</p>
                 </div>
                 <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
-                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">98<span class="text-[#00d27e]">%</span></h3>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2"><span class="counter" data-target="98">0</span><span class="text-[#00d27e]">%</span></h3>
                     <p class="text-sm text-gray-500">Client Satisfaction</p>
                 </div>
                 <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
-                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">24<span class="text-[#00d27e]">/7</span></h3>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2"><span class="counter" data-target="24">0</span><span class="text-[#00d27e]">/7</span></h3>
                     <p class="text-sm text-gray-500">Support Coverage</p>
                 </div>
                 <div class="bg-[#111111] border border-[#222222] p-8 rounded-3xl text-center hover:border-[#00d27e] hover:-translate-y-2 transition duration-300">
-                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2">5<span class="text-[#00d27e]">★</span></h3>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-2"><span class="counter" data-target="5">0</span><span class="text-[#00d27e]">★</span></h3>
                     <p class="text-sm text-gray-500">Average Rating</p>
                 </div>
             </div>
@@ -768,7 +768,7 @@
         
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // FAQ Accordion Logic
+        // --- 1. FAQ Accordion ---
         function toggleFaq(element) {
             const item = element.closest('.faq-item');
             const answer = item.querySelector('.faq-answer');
@@ -794,14 +794,12 @@
             }
         }
 
-        // Portfolio Filter Logic
+        // --- 2. Portfolio Filter ---
         function filterPortfolio(category) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
 
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-            });
+            buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
             items.forEach(item => {
@@ -810,6 +808,59 @@
                 } else {
                     item.classList.add('hidden');
                 }
+            });
+        }
+
+        // --- 3. Stats Counter Animation ---
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200; // The lower the slower
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 10); // Fast update
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Trigger counter when scrolled into view
+        const statsSection = document.querySelector('.counter').closest('section');
+        let observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(statsSection);
+
+        // --- 4. Hero Background Mouse Follow (Subtle Parallax) ---
+        const heroBg = document.getElementById('hero-bg');
+        const blobs = document.querySelectorAll('.bg-blob');
+
+        // Only run on desktop to prevent weird mobile scrolling issues
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth / 2 - e.pageX) / 80;
+                const y = (window.innerHeight / 2 - e.pageY) / 80;
+
+                blobs.forEach(blob => {
+                    const speed = blob.getAttribute('data-speed');
+                    // Combine the mouse parallax with the existing CSS animation
+                    blob.style.transform = `translate(${x * speed}px, ${y * speed}px) scale(1.05)`;
+                });
             });
         }
     </script>
